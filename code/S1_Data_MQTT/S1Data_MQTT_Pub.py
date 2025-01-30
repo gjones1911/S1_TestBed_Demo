@@ -60,7 +60,7 @@ class SubHandler(object):
         
 # For MQTT
 mqttBroker = 'recoil.ise.utk.edu'
-pub_client = mqtt.Client('S1 Publisher')
+pub_client = mqtt.Client(client_id='S1 Publisher')
 pub_client.username_pw_set(username = 'hivemquser', password = 'mqAccess2024REC')
 
 def publishing_data():

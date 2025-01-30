@@ -17,16 +17,24 @@ from s1_instruction_utils import *
 # * topic the client will publish to
 # * topic the client will subscribe to
 # * the LLM assistant that will serve as the instructor
-mqtt_instructor = InstructorMqttClient()
+mqtt_predictor = PredictorMqttClient(
+    client_name="Fault_prediction_assistant",
+    publish_topic='prediction',
+)
 
 # set the number of seconds 
 # the instructor will run
 DEMO_TIME_OUT=60 # seconds
 
-
+loop_count = 20
+interval_sec = 10
+topic='prediction'
+try_limit = 10
 
 # start the instruction production messaging process
 if __name__ == "__main__":
     duration = parse_args()
     print(f"\n\nDuration: {duration}\n\n")
-    mqtt_instructor.run_mqtt_s1_instructor(client_name=CLIENT_ID, demo_time_out=duration, try_limit=10)
+    mqtt_predictor.run_predictions_loop(loop_count, interval_sec=interval_sec, topic=topic, 
+                            try_limit=try_limit, duration=duration
+                            )

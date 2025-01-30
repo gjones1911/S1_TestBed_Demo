@@ -62,3 +62,5 @@ cython_debug/
 /code/LLM_TOOLS/HF_Tokens.json
 
 /.DS_Store
+*.pyc
+/__pycache__

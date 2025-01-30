@@ -1,7 +1,8 @@
 import paho.mqtt.client as mqtt
 import time
 
-
+import os
+import sys
 import numpy as np
 import pandas as pd
 
@@ -46,9 +47,13 @@ S1_topics = ['Channel 1 Bias',
              'Channel 2 VelocityPk',
              'Channel 2 VelocityRMS']
 
+
+curdir = os.getcwd()
+print(curdir)
+
 # Loading random forest model
 # replace with path to model trained & pickled locally (S1 Server)
-with open ('model/rf_joblib.z', 'rb') as f:
+with open (f'{curdir}/RandomForestPredictionMQTT/model/rf_joblib.z', 'rb') as f:
     rf = joblib.load(f)
 
 # Creating empty dictionary to store messages
@@ -94,7 +99,7 @@ def on_message(client, userdata, message):
 
 mqttBroker = MQTT_BROKER
 
-client = mqtt.Client('S1RandomForestClient')
+client = mqtt.Client(client_id='S1RandomForestClient')
 
 ## with pwd
 
