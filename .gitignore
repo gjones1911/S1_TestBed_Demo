@@ -61,4 +61,4 @@ cython_debug/
 /code/S1_MotorMaintenaceInstructor
 /code/LLM_TOOLS/HF_Tokens.json
 
-/.DS_Store
+.DS_Store
