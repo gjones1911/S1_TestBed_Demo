@@ -41,4 +41,4 @@ This repo is for running and maintaining the the S1-testbed demo for the Applied
       ```
 
 ## Usage:
-* To start the demo, change directories to the /code folder and follow the instructions for "Demo-Usage" in the [README](/code/README.md) found there. 
+* To start the demo, change directories to the /code folder and follow the instructions for "Demo-Usage" in the [README](./code/README.md) found there. 
