@@ -5,11 +5,11 @@
 from s1_instruction_utils import *
 print(curdir)
 
-# a file is used as a flag to indicate when the model has completed loading
-# to help ensure everything sinks up. To make this work we need to remove the flag
-# first thing we do
+# # a file is used as a flag to indicate when the model has completed loading
+# # to help ensure everything sinks up. To make this work we need to remove the flag
+# # first thing we do
 flag_file = curdir + "/tmp" + "/s1_instructor_loaded.flag"
-uncheck_flag_file(flag_file)
+# uncheck_flag_file(flag_file)
 
 
 # expected order of data points

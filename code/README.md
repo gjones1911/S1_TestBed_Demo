@@ -1,9 +1,18 @@
 # Code Folder for S1_TestBed_Demo
 
 > Contains several files and modules for running the S1-testbed Digital Twin demo
-* []()
-  * .
-# Folders:
+
+## Demo-Usage
+
+> To start the demo you just have to ensure your virtual environment is active (see README.md in root folder), you are in a command line inside of the code folder and then use the following command:
+```bash
+source s1_demo_starter.sh
+```
+> The script will print out the progress of starting up each component and it will take a minute or two for everything to get going. If all goes well you will be able to see output from each script in the indicated .log file in the logs folder. 
+
+
+## Folders:
+
 * [logs](/logs)
   * contains text files for debugging, viewing the three main mqtt scripts (see below scripts purposes sections)
 * [RandomForestModel](/RandomForestModel)
@@ -13,9 +22,9 @@
 * [S1_Data_MQTT](/S1_Data_MQTT)
   * contains the modules and script that will begin the broadcasting of s1 data from the opcua connection onto a mqtt connection
 
-
 * [s1_mqtt_instructor](/s1_mqtt_instructor)
   * contains modules, classes, models, and scripts used to facilitate AI based generation of s1 motor fault correction. 
+  * ***Important***: to work a version of the "S1_MotorMaintenaceInstructor" LLM must be in the s1_mqtt_instructor.
 
 
 * [S1_MotorMaintenaceInstructor](/S1_MotorMaintenaceInstructor)
@@ -26,19 +35,27 @@
 * [LLM_TOOLS](/LLM_TOOLS)
   * contains the class the connects to and operates the S1_MotorMaintenanceInstructor bot
 
-# scripts and purpose
+# main scripts
 
-* RandomForestPredictionMQTT/S1Predict.py
+* [RandomForestPredictionMQTT/S1Predict.py](/RandomForestPredictionMQTT/S1Predict.py)
   * starts the process of predicting motor states based on data broadcast over the mqtt broker
- 
-* s1_instruction_starter.py
+  * **Important**:
+
+* [S1_Data_MQTT/S1Data_MQTT_Pub.py](/S1_Data_MQTT/S1Data_MQTT_Pub.py)
+  * begins pulling data from the S1 using a opcua connection and publishing on the mqtt connection
+
+* [s1_mqtt_instructor/s1_instruction_starter.py](/s1_mqtt_instructor/s1_instruction_starter.py)
   * can be run from the command line to start the Instruction Component of the S1-DT-Demo
   * assumes the connection is sending predictions on the topic "prediction"
   * usage:
     * ```python
       python3 s1_instruction_starter.py
       ```
-## status code decoding:
+## Status code decoding
+
+> The below numeric to string mappings help indicate what state the motor is predicted to be in. 
+  Using the value indicated you can look up what it is predicting.
+
 * 0: "baseline"
 * 1: "bent_shaft"
 * 2: "eccentric_rotor"
