@@ -3,6 +3,36 @@ from opcua import Client
 import time
 import paho.mqtt.client as mqtt
 
+import json
+import argparse
+
+
+def parse_args():
+    # Create an argument parser
+    parser = argparse.ArgumentParser(description="Script to run with a specified duration.")
+    
+    # Add the --duration argument
+    parser.add_argument(
+        '--duration',
+        type=int,
+        required=False,
+        help="Duration in seconds for the script to run.",
+        default=10,
+    )
+    
+    # Parse the arguments
+    args = parser.parse_args()
+    
+    # Access the --duration argument
+    duration = args.duration
+    
+    print(f"data publisher Running script for {duration} seconds...")
+    return duration
+
+
+duration = parse_args()
+
+
 # list of nodes for subscribing
 subs = {'Channel 1 Direct': 'ns=4;s=f31b1e1d-0b0a-44a3-8b5e-d3378890054b',
         'Channel 1 Direct RMS':'ns=4;s=58e345ff-c79f-48c3-97c5-1f45bb78bddf',
@@ -43,8 +73,14 @@ data = {'Channel 1 Direct':[],
         'Volts': []}
 
 def append_data(node_key, value):
+    # if there is no data in the index/key added the first
+    # otherwise just overwrite the last
     if node_key in data:
-        data[node_key].append(value)
+        # data[node_key].append(value)
+        if len(data[node_key]) > 0:
+            data[node_key][0] = value
+        else:
+            data[node_key].append(value)
     else:
         print(f'{node_key} not found in dictionary.')
 
@@ -52,42 +88,66 @@ def append_data(node_key, value):
 class SubHandler(object):
     def datachange_notification(self, node, val, data):
         #print("Python: New data change event", node, val)
-        append_data(str(inverse_subs[str(node)]), val)
-        print('Python: New data change event', inverse_subs[str(node)], val)
+        # print(f"\n\nData: {data}")
+        node_key = str(inverse_subs[str(node)])
+        append_data(node_key, val)
+        # print(f'Python: New data change event\n:node_key:{node_key}\nval:{val}\n')
 
     def event_notification(self, event):
         print("Python: New event", event)
         
-# For MQTT
+# For MQTT Client creation (data publisher)
 mqttBroker = 'recoil.ise.utk.edu'
 pub_client = mqtt.Client(client_id='S1 Publisher')
 pub_client.username_pw_set(username = 'hivemquser', password = 'mqAccess2024REC')
 
 def publishing_data():
     while True:
+        print(f"Data-->: {data}")
+        json_package = {}
         for key, values in data.items():
+            
+            # while values:
+            if len(values) == 0:
+                value = 0
+                json_package[key] = 0
+            else:
+                json_package[key] = values[-1]
+                # value = values.pop(0) # remove first element
+                value = values[-1] # get last added element
+                topic = f'{key}'
+                pub_client.publish(topic, value, qos = 0)
+                print(f'Published Data on topic: {topic}, val: {value:.04f}')
+        
+        json_payload = json.dumps(json_package)
+        # attempt to publish new json payload
+        print("publishing on 'json_data'")
+        print(json_payload)
+        pub_client.publish("json_data", json_payload,qos=2)
             # only want to publish new data
-            while values:
-                if len(values) == 0:
-                    value = 0
-                else:
-                    value = values.pop(0) # remove first element
-                    topic = f'{key}'
-                    pub_client.publish(topic, value, qos = 0)
-                    print('Published Data')
+            # while values:
+            #     if len(values) == 0:
+            #         value = 0
+            #     else:
+            #         value = values.pop(0) # remove first element
+            #         topic = f'{key}'
+            #         pub_client.publish(topic, value, qos = 0)
+            #         print(f'Published Data on topic: {topic}, val: {value:.04f}')
         time.sleep(2)
 
 if __name__ == "__main__":
+    # connect with opcua client
     client = Client("opc.tcp://SMARTSHOTS:7560/System1OPCUAServer")  
     try:
         client.connect()
-        pub_client.connect(mqttBroker, keepalive = 1000)
+        
         # Create a subscription
         subscription = client.create_subscription(500, SubHandler())  # 500 ms publishing interval
-
-        # Subscribe to a data change event
+        
+        pub_client.connect(mqttBroker, keepalive = 1000)
+        
+        # Subscribe to a data change events for each node in the subs (set)
         #handle = subscription.subscribe_data_change(client.get_node("ns=4;s=6166f712-292e-403c-8b9f-0a093ffea11b")) 
-
         for key in subs:
             handle = subscription.subscribe_data_change(client.get_node(subs[key]))
             
@@ -99,4 +159,4 @@ if __name__ == "__main__":
 
     finally:
         client.disconnect()
-        print(data)
+        print("\n\nFinal data:\n", data, "\n\n")

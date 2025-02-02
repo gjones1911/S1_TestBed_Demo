@@ -4,6 +4,7 @@ from LLM_TOOLS.LLM_Bots import *
 import paho.mqtt.client as mqtt
 import time
 import os
+import sys
 import random
 
 import json
@@ -20,8 +21,9 @@ def parse_args():
     parser.add_argument(
         '--duration',
         type=int,
-        required=True,
-        help="Duration in seconds for the script to run."
+        required=False,
+        help="Duration in seconds for the script to run.",
+        default=10,
     )
     
     # Parse the arguments
@@ -30,7 +32,7 @@ def parse_args():
     # Access the --duration argument
     duration = args.duration
     
-    print(f"Running script for {duration} seconds...")
+    print(f"-->Running script for {duration} seconds...")
     return duration
 
 ## MQTT connection settings
@@ -65,7 +67,7 @@ Model_Name = r"S1_MotorMaintenaceInstructor"
 # get instance of instructor bot while passing either the path to the 
 # relevant folder, or the path to a model on hugging face which should consist of either the base name, or a username/model_name
 # for instance for me this would be gjonesQ02/S1_InsturctionGeneratorGamma
-instructor_Bot = InstructorBot(bot_path=Model_Name, name='Instructor')
+# instructor_Bot = InstructorBot(bot_path=Model_Name, name='Instructor')
 
 # will login and if the ""add_git_cred" is set to True, will store them for future operations
 def set_up_hf_login(HF_Token_json, add_git_cred=True):
@@ -95,7 +97,9 @@ def set_up_hf_login(HF_Token_json, add_git_cred=True):
 
 
 class InstructorMqttClient:
-    def __init__(self, instruction_assistant=instructor_Bot, 
+    def __init__(self, 
+                instruction_assistant: None,
+                instruction_assistant_path: str=None, 
                 client_name="Instruction_Assistant_", 
                 subscription_topic=subscription_topic, publish_topic=publish_topic, 
                 *kwargs):
@@ -104,7 +108,14 @@ class InstructorMqttClient:
         self.client_name = client_name
         self.instruction_assistant=instruction_assistant
 
-
+    def load_instructor_assistant(self, assistant, assistant_path):
+        if assistant:
+            self.instruction_assistant= assistant
+        elif assistant_path:
+            self.instruction_assistant= InstructorBot(bot_path=Model_Name, name='Instructor')
+        else:
+            raise ValueError(f"One of 'instruction_assistant' in the form of an 'InstructorBot' or 'instruction_assistant_path' in the form of a path to a local or HF style LLM must be passed when creating the 'InstructorMqttClient', ending program")
+            sys.exit()
     ##### Utility functions
     # callback upon connection
     def on_connect(self, client, userdata, flags, rcode):

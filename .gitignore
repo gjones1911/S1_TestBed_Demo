@@ -15,8 +15,8 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
-.venv
+./env
+/venvs
 env/
 venv/
 ENV/
@@ -61,10 +61,11 @@ cython_debug/
 /code/S1_MotorMaintenaceInstructor
 /code/LLM_TOOLS/HF_Tokens.json
 
-<<<<<<< HEAD
 /.DS_Store
-*.pyc
-/__pycache__
-=======
-.DS_Store
->>>>>>> 2b085c1a34796fdd93d9c6d6b524b58090331131
+
+
+/code/tmp/
+*__pycache__
+*.flag
+/data/credentials/
+*.log

@@ -1,9 +1,10 @@
 
 import joblib
+import os
 import numpy as np
 import pandas as pd
 # import scikitplot as skplt
-import pickle
+# import pickle
 from sklearn.model_selection import train_test_split
 from sklearn.utils import resample
 from sklearn.preprocessing import StandardScaler
@@ -21,10 +22,17 @@ from everywhereml.code_generators.prettifiers.basic_python_prettifier import bas
 
 #import matplotlib.pyplot as plt
 #import seaborn as sns
-
+curdir = os.getcwd()
 RNDSEED = np.random.seed(0)
 # !! Double-check path
-df = pd.read_csv('RandomForest/data/ALL_S1_DATA_INT.csv')
+# C:\Users\iLab\GIT_REPOS\SAFE\S1_TestBed_Demo\S1_TestBed_Demo\code\RandomForestPredictionMQTT
+# C:\Users\iLab\GIT_REPOS\SAFE\S1_TestBed_Demo\S1_TestBed_Demo\code\RandomForestModel
+# C:\Users\iLab\GIT_REPOS\SAFE\S1_TestBed_Demo\S1_TestBed_Demo\data
+# C:\Users\iLab\GIT_REPOS\SAFE\S1_TestBed_Demo\S1_TestBed_Demo\data\ALL_S1_DATA_INT.csv
+data_path = r'./data/ALL_S1_DATA_INT.csv'
+print(f"Curdir: {curdir}")
+print(f"Checking at: {data_path}")
+df = pd.read_csv(data_path, low_memory=False)
 
 print(df.columns)
 # Dropping the timestamp column
@@ -76,9 +84,12 @@ calc_metrics(y_pred, y_test)
 
 # save the model
 # !! Change to local path
-joblib.dump(rf, '/Users/jwill521/Desktop/Specific Fault Transitions/RandomForest/model/rf_joblib.z')
-
-loaded_model = joblib.load('/Users/jwill521/Desktop/Specific Fault Transitions/RandomForest/model/rf_joblib.z')
+model_path = r"./code/RandomForestModel/rf_model/rf2_joblib.pk"
+# C:\Users\iLab\GIT_REPOS\SAFE\S1_TestBed_Demo\S1_TestBed_Demo\code\RandomForestModel\rf_model
+print(f"\n\n\nSaving to: {model_path}")
+joblib.dump(rf, model_path)
+print(f"\n\n\nLoading from: {model_path}")
+loaded_model = joblib.load(model_path)
 print('Results after loading the model:')
 result = loaded_model.score(x_test, y_test)
 print(result)
