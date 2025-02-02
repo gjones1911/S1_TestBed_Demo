@@ -4,13 +4,13 @@ This repo is for running and maintaining the the S1-testbed demo for the Applied
 
 # Folders:
 
-* [code](/code)
+* [code](./code)
   * all code and scripts used to run/maintain the demo
-* [data](/data)
+* [data](./data)
   * any relevant data files
-* [slides](/slides)
+* [slides](./slides)
   * any relevant slides and presentations
-* [latex](/latex)
+* [latex](./latex)
   * any relevant overleaf project links
 
 

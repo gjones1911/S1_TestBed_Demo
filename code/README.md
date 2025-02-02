@@ -13,38 +13,38 @@ source s1_demo_starter.sh
 
 ## Folders:
 
-* [logs](/logs)
+* [logs](./logs)
   * contains text files for debugging, viewing the three main mqtt scripts (see below scripts purposes sections)
-* [RandomForestModel](/RandomForestModel)
+* [RandomForestModel](./RandomForestModel)
   * contains a set of trained random forest models for s1 motor state prediction and python scripts to train/generate them.
-* [RandomForestPredictionMQTT]()
+* [RandomForestPredictionMQTT](./RandomForestPredictionMQTT)
   * contains modules and scripts for the generation of a s1 motor state based on data broadcast by the S
-* [S1_Data_MQTT](/S1_Data_MQTT)
+* [S1_Data_MQTT](./S1_Data_MQTT)
   * contains the modules and script that will begin the broadcasting of s1 data from the opcua connection onto a mqtt connection
 
-* [s1_mqtt_instructor](/s1_mqtt_instructor)
+* [s1_mqtt_instructor](./s1_mqtt_instructor)
   * contains modules, classes, models, and scripts used to facilitate AI based generation of s1 motor fault correction. 
   * ***Important***: to work a version of the "S1_MotorMaintenaceInstructor" LLM must be in the s1_mqtt_instructor.
 
 
-* [S1_MotorMaintenaceInstructor](/S1_MotorMaintenaceInstructor)
+* [S1_MotorMaintenaceInstructor](./S1_MotorMaintenaceInstructor)
   * the LLM model used to generate instructions (will not be in the git due to size)
   * can be downloaded from:  
 
 
-* [LLM_TOOLS](/LLM_TOOLS)
+* [LLM_TOOLS](./LLM_TOOLS)
   * contains the class the connects to and operates the S1_MotorMaintenanceInstructor bot
 
 # main scripts
 
-* [RandomForestPredictionMQTT/S1Predict.py](/RandomForestPredictionMQTT/S1Predict.py)
+* [RandomForestPredictionMQTT/S1Predict.py](./RandomForestPredictionMQTT/S1Predict.py)
   * starts the process of predicting motor states based on data broadcast over the mqtt broker
   * **Important**:
 
-* [S1_Data_MQTT/S1Data_MQTT_Pub.py](/S1_Data_MQTT/S1Data_MQTT_Pub.py)
+* [S1_Data_MQTT/S1Data_MQTT_Pub.py](./S1_Data_MQTT/S1Data_MQTT_Pub.py)
   * begins pulling data from the S1 using a opcua connection and publishing on the mqtt connection
 
-* [s1_mqtt_instructor/s1_instruction_starter.py](/s1_mqtt_instructor/s1_instruction_starter.py)
+* [s1_mqtt_instructor/s1_instruction_starter.py](./s1_mqtt_instructor/s1_instruction_starter.py)
   * can be run from the command line to start the Instruction Component of the S1-DT-Demo
   * assumes the connection is sending predictions on the topic "prediction"
   * usage:
