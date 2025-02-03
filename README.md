@@ -42,3 +42,83 @@ This repo is for running and maintaining the the S1-testbed demo for the Applied
 
 ## Usage:
 * To start the demo, change directories to the /code folder and follow the instructions for "Demo-Usage" in the [README](./code/README.md) found there. 
+
+# UI features
+
+- Gradio
+  - less control: 
+- Streamlit
+- Flask -> html/css
+- Quasar
+  - 
+
+- A UI to start / stop the demo
+
+- Subscribe to MQTT (to OPCUA Server) so that we can
+  - see the incoming data -> we know it is running! It is ON
+    - when it is first ON, we can email / notify people
+  - OFF
+    - ...
+  - timestamps
+  - History | log
+  - Log viewers
+
+- Visualization of "raw" data -> enduser:: manager, operator, dev, ... | XL JW
+  - time line plots
+    - for each feature
+  - Historic data
+  - Live view
+  - basic stats:
+    - Avg, Std, ... window-size
+    - Trend line?
+  - Download as CSV, XLSX  
+  - Live camera 
+  - 3D model "live" view
+    - Unreal
+    - Unity?
+
+- RF Predictor -> end users: engineers, managers,  | JW
+  - confusion matrix?
+  - "F1" / confidence (?) / accuracy?
+  - two tabs
+    - one for ml 
+      - model number, version
+        - rf:1.0.2
+        - lstm:1.5.3
+
+    - one for layman
+
+  - what's failure mode?
+    - meaning - related docs
+      - a graph? (example graph)
+      - references? 
+  - 
+
+- LLM instructor? | GJ
+  - Text completion
+    - given "bent shaft", show the proper instructions 
+    - Conversational bot:
+      - machine's maintenance history, work orders, crews ....  ! (not s1 yet)
+      
+
+- MagicLeap
+  - ML model will be on the S1 server
+  - 3D model on the glasses during runtime
+  - 3D model / build 
+    - ORETTC source code
+    - source code on the ASL Workstation 
+  - The glass connects to the MQTT / S1 Server during runtime  (?)
+  - S1 router
+    - S1 Server (OPCUA)
+      - MQTT Broker (?local one ?) via a docker
+    - S1-2300 | DAQ
+    - MagicLeap
+    - Industrial Controller
+    
+
+
+- RF backend UI? Admin's console?
+  - how the flow to update the model?
+  - when to re-train the model
+  - ?
+

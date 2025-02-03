@@ -63,6 +63,7 @@ cython_debug/
 
 /.DS_Store
 
+/code/.ipynb_checkpoints
 
 /code/tmp/
 *__pycache__
