@@ -5,6 +5,7 @@ import paho.mqtt.client as mqtt
 
 import json
 import argparse
+import numpy as np
 
 
 def parse_args():
@@ -112,18 +113,18 @@ def publishing_data():
                 value = 0
                 json_package[key] = 0
             else:
-                json_package[key] = values[-1]
+                json_package[key] = np.around(values[-1], 4)
                 # value = values.pop(0) # remove first element
-                value = values[-1] # get last added element
+                value = np.around(values[-1], 4) # get last added element
                 topic = f'{key}'
                 pub_client.publish(topic, value, qos = 0)
-                print(f'Published Data on topic: {topic}, val: {value:.04f}')
+                print(f'Gathered Data: {topic}, val: {value:.04f}')
         
         json_payload = json.dumps(json_package)
         # attempt to publish new json payload
         print("publishing on 'json_data'")
         print(json_payload)
-        pub_client.publish("json_data", json_payload,qos=2)
+        pub_client.publish("json_data", json_payload,qos=0)
             # only want to publish new data
             # while values:
             #     if len(values) == 0:

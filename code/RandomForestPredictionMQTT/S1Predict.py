@@ -51,6 +51,9 @@ def generate_motor_topics(motor_number):
 # expected order
 og = ['ch1_bias', 'ch1_derivedPk', 'ch1_directRMS', 'ch1_direct', 'ch1_velocityRMS', 'ch1_velocityPk', 
     'ch2_bias', 'ch2_derivedPk', 'ch2_directRMS', 'ch2_direct', 'ch2_velocityRMS', 'ch2_velocityPk']
+
+
+# order expected by RF model 
 desired_order = [
     'Channel 1 Bias', 'Channel 1 Derived Pk', 'Channel 1 Direct RMS', 'Channel 1 Direct', 
     'Channel 1 Velocity RMS', 'Channel 1 Velocity Pk',
@@ -86,6 +89,7 @@ S1_topics = ['Channel 1 Bias',
 extra_topic = ["json_data"]
 
 S1_topics += extra_topic
+S1_topics = ["json_data"]
 curdir = os.getcwd()
 print("current directory:\n", curdir)
 
@@ -137,17 +141,21 @@ def on_message(client, userdata, message):
         else:
             motor = topic.split('/')[0]
             messages[motor][topic] = payload
-        print(f"topic: {topic}")
-        print('Received message: ', message.topic, str(payload))
+        if topic == "json_data":
+            print(f"topic: {topic}")
+            print('Received message: ', message.topic, str(payload))
+        else:
+            print(f"other data:---{topic}")
     
         # setting the predictions to every 10 seconds, after the start of receiving a message.
         global start_time
         if time.time() - start_time >= 10:
+            print(f"topic: {message.topic}")
             for motor in messages:
                 model_predict(messages[motor], motor)
             start_time = time.time()
         else:
-            print(f"next prediction in {(time.time() - start_time)-10:.2f} seconds")
+            print(f"next prediction in {abs(time.time() - start_time-10):.2f} seconds")
     else:
         try:
             data = json.loads(message.payload.decode('utf-8'))
@@ -158,6 +166,7 @@ def on_message(client, userdata, message):
             # print(f"df:\n{df}\n")
             
             prediction = str(rf.predict(df)[0])
+            print(f"og-prediction: {prediction}")
             if prediction == "9":
                 print("Adjusting value to 2")
                 prediction = "2"
@@ -172,7 +181,8 @@ def on_connect(client, userdata, flags, rc, properties):
     
     if rc == 0:
         print("Connected successfully")
-        for motor_topics in [Motor1_topics, Motor2_topics, Motor3_topics, S1_topics]:
+        # for motor_topics in [Motor1_topics, Motor2_topics, Motor3_topics, S1_topics]:
+        for motor_topics in [S1_topics]:
             for topic in motor_topics:
                 print(f"Subscribing to: {topic}")
                 client.subscribe(topic)
