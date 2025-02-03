@@ -54,7 +54,7 @@ This repo is for running and maintaining the the S1-testbed demo for the Applied
 
 - A UI to start / stop the demo
 
-- Subscribe to MQTT (to OPCUA Server) so that we can
+- Subscribe to MQTT (to OPCUA Server) so that we can | XL
   - see the incoming data -> we know it is running! It is ON
     - when it is first ON, we can email / notify people
   - OFF
@@ -63,11 +63,13 @@ This repo is for running and maintaining the the S1-testbed demo for the Applied
   - History | log
   - Log viewers
 
-- Visualization of "raw" data -> enduser:: manager, operator, dev, ... | XL JW
+- Visualization of "raw" data -> enduser:: manager, operator, dev, ... | JW+XL
   - time line plots
     - for each feature
   - Historic data
+    - v1
   - Live view
+    - v2
   - basic stats:
     - Avg, Std, ... window-size
     - Trend line?
@@ -77,14 +79,14 @@ This repo is for running and maintaining the the S1-testbed demo for the Applied
     - Unreal
     - Unity?
 
-- RF Predictor -> end users: engineers, managers,  | JW
+- RF Predictor -> end users: engineers, managers,  | JW/GJ
   - confusion matrix?
   - "F1" / confidence (?) / accuracy?
   - two tabs
     - one for ml 
       - model number, version
         - rf:1.0.2
-        - lstm:1.5.3
+        - lstm:1.5.3 (future) 
 
     - one for layman
 
@@ -95,13 +97,17 @@ This repo is for running and maintaining the the S1-testbed demo for the Applied
   - 
 
 - LLM instructor? | GJ
+  - two versions
+    - LIVE
+    - mockup - simulate a failure
+      - "fake" a mqtt message with the failure
   - Text completion
     - given "bent shaft", show the proper instructions 
     - Conversational bot:
       - machine's maintenance history, work orders, crews ....  ! (not s1 yet)
       
 
-- MagicLeap
+- MagicLeap | JLW
   - ML model will be on the S1 server
   - 3D model on the glasses during runtime
   - 3D model / build 
@@ -114,7 +120,7 @@ This repo is for running and maintaining the the S1-testbed demo for the Applied
     - S1-2300 | DAQ
     - MagicLeap
     - Industrial Controller
-    
+
 
 
 - RF backend UI? Admin's console?
