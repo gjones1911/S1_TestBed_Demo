@@ -70,3 +70,6 @@ cython_debug/
 *.flag
 /data/credentials/
 *.log
+
+/.gradio/
+*.gradio
