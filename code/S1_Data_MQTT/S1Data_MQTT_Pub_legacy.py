@@ -34,7 +34,7 @@ def parse_args():
 duration = parse_args()
 
 
-# list of nodes for subscribing
+# list of nodes for subscribing from OPCUA
 subs = {'Channel 1 Direct': 'ns=4;s=f31b1e1d-0b0a-44a3-8b5e-d3378890054b',
         'Channel 1 Direct RMS':'ns=4;s=58e345ff-c79f-48c3-97c5-1f45bb78bddf',
         'Channel 1 Derived Pk':'ns=4;s=d0e181c9-3b65-4e7b-83fc-075b3d96d0c8', 
@@ -48,7 +48,7 @@ subs = {'Channel 1 Direct': 'ns=4;s=f31b1e1d-0b0a-44a3-8b5e-d3378890054b',
         'Channel 2 Velocity RMS':'ns=4;s=734875fc-c3fa-4128-92f6-6a8c57618420', 
         'Channel 2 Bias':'ns=4;s=0d63b2dc-2ee8-48a9-8358-d584dda813d7'}
 
-# additional nodes for subscribing (high frequency)
+# additional nodes for subscribing (high frequency) from OPCUA
 hf_subs = {'Channel 1 Demod Wf(2000Hz)': 'ns=4;s=77ce0dbe-6cd6-465a-aed1-725b114af6fc',
            'Channel 1 Accl Wf(5000Hz)': 'ns=4;s=56a70275-e96b-466c-aecd-f77603087c62',
            'Channel 2 Demod Wf(2000Hz)': 'ns=4;s=cfce6899-8583-41e9-b076-c45605388707',
@@ -106,6 +106,7 @@ def publishing_data():
     while True:
         print(f"Data-->: {data}")
         json_package = {}
+        # gather data from message into dict
         for key, values in data.items():
             
             # while values:
@@ -117,23 +118,15 @@ def publishing_data():
                 # value = values.pop(0) # remove first element
                 value = np.around(values[-1], 4) # get last added element
                 topic = f'{key}'
-                pub_client.publish(topic, value, qos = 0)
-                print(f'Published Data on topic: {topic}, val: {value:.04f}')
+                # pub_client.publish(topic, value, qos = 0)   # old code for multi-channel publishing
+                # print(f'Published Data on topic: {topic}, val: {value:.04f}')
         
         json_payload = json.dumps(json_package)
         # attempt to publish new json payload
-        print("publishing on 'json_data'")
+        print(f"publishing on 'json_data'\n{json_payload}\n------------------------------\n\n")
         print(json_payload)
+        
         pub_client.publish("json_data", json_payload,qos=0)
-            # only want to publish new data
-            # while values:
-            #     if len(values) == 0:
-            #         value = 0
-            #     else:
-            #         value = values.pop(0) # remove first element
-            #         topic = f'{key}'
-            #         pub_client.publish(topic, value, qos = 0)
-            #         print(f'Published Data on topic: {topic}, val: {value:.04f}')
         time.sleep(2)
 
 if __name__ == "__main__":

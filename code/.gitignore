@@ -61,3 +61,6 @@ cython_debug/
 # Ignore models stored locally so we do not try to push large file to the git and break things
 /code/S1_MotorMaintenaceInstructor
 /code/LLM_TOOLS/HF_Tokens.json
+*/S1_MotorMaintenaceInstructor
+*/*.log
+./code/logs/s1_instructor_starter.log

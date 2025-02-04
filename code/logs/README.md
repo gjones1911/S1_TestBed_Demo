@@ -1,0 +1,1 @@
+# This folder contains log files for the simultaneous runs of the three main scripts for the demo.  During the run, the outputs for each are placed in the indicated .log file for debugging, process visualization purposes. 
