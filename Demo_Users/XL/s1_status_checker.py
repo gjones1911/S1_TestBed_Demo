@@ -26,8 +26,9 @@ def on_message(client, userdata, message):
     global latest_payload
     payload = message.payload.decode("utf-8")
     latest_payload = json.loads(payload)
-    print(latest_payload)
-    
+    # Print the latest payload with a timestamp
+    print(f"{time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())} - {message.topic} - {latest_payload}")
+
     # Access unused parameters to avoid warnings
     _ = client, userdata
 
@@ -56,7 +57,8 @@ while not broker_connection_status:
 
 try:
     # Subscribe to the desired topic
-    client.subscribe("json_data")  # Subscribe to json only
+    # client.subscribe("json_data")  # Subscribe to json_data only
+    client.subscribe("#") # all topics
 
     # Keep the script running
     while True:
