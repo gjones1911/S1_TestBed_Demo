@@ -5,6 +5,7 @@ import uuid
 import logging
 from logging.handlers import RotatingFileHandler
 import os
+import threading
 
 # Create log directory if it doesn't exist
 log_dir = 'log'
@@ -32,10 +33,11 @@ class MyMQTT:
         self.port = port
         self.user = user
         self.password = password
-        self.client_id = f'subscriber_{uuid.uuid4().hex}'
-        self.client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id=self.client_id, clean_session=False)
+        self.client_id = f'subscriber_{uuid.uuid4().hex[:8]}'
+        self.client = mqtt.Client(client_id=self.client_id, clean_session=True)
         self.broker_connection_status = False
         self.latest_payload = None
+        self.stop_event = threading.Event()
 
         # Assign the callback functions
         self.client.on_connect = self.on_connect
@@ -48,7 +50,7 @@ class MyMQTT:
     def on_connect(self, client, userdata, flags, rc, properties=None):
         if rc == 0:
             self.broker_connection_status = True
-            logging.info("Connected to MQTT Broker!")
+            logging.info(f"Connected to MQTT Broker with Client ID: {self.client_id}")
         else:
             logging.error(f"Failed to connect, return code {rc}")
 
@@ -96,20 +98,30 @@ class MyMQTT:
                 logging.error(f"Connection failed: {e}. Retrying in 5 seconds...")
                 time.sleep(5)
 
+    def get_latest_payload(self):
+        return self.latest_payload
+    
     def subscribe(self, topic):
-        try:
-            self.client.subscribe(topic)
-            logging.info(f"Subscribed to topic: {topic}")
-            while True:
-                time.sleep(1)
-        except KeyboardInterrupt:
-            logging.info("Interrupted by user, stopping...")
-            self.disconnect()
-        except Exception as e:
-            logging.error(f"An error occurred: {e}")
-            self.disconnect()
+        def run_subscription():
+            try:
+                self.client.subscribe(topic)
+                logging.info(f"Subscribed to topic: {topic}")
+                while not self.stop_event.is_set():
+                    self.client.loop()
+                    time.sleep(1)
+            except KeyboardInterrupt:
+                logging.info("Interrupted by user, stopping...")
+                self.disconnect()
+            except Exception as e:
+                logging.error(f"An error occurred: {e}")
+                self.disconnect()
+
+        subscription_thread = threading.Thread(target=run_subscription)
+        subscription_thread.daemon = True
+        subscription_thread.start()
 
     def disconnect(self):
+        self.stop_event.set()
         self.client.disconnect()
         self.client.loop_stop()
         logging.info("Disconnected from MQTT Broker")
@@ -118,7 +130,19 @@ class MyMQTT:
 if __name__ == "__main__":
     mqtt_client = MyMQTT()
     mqtt_client.connect()
-    # mqtt_client.subscribe("#") # all topics
-    ## Note one subscribe at a time, as it is a single thread
-    mqtt_client.subscribe("json_data") # json_data
-    # mqtt_client.subscribe("Channel 2 Bias") # sample topic: Channel 2 Bias
+    # mqtt_client.subscribe("json_data") # json_data
+    mqtt_client.subscribe("Channel 1 Direct") # sample
+
+    try:
+        while True:
+            time.sleep(1)
+
+            payload = mqtt_client.get_latest_payload()
+            if payload:
+                print(f"Latest payload: {payload}")
+            else:
+                print("No new payload received.")
+
+    except KeyboardInterrupt:
+        mqtt_client.disconnect()
+        logging.info("Program terminated by user")

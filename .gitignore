@@ -71,5 +71,7 @@ cython_debug/
 /data/credentials/
 *.log
 
-/.gradio/
+**/.gradio/
 *.gradio
+log/
+**/log/
