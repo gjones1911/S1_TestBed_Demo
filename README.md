@@ -54,7 +54,7 @@ This repo is for running and maintaining the the S1-testbed demo for the Applied
 
 ## A UI to start / stop the demo
 
-[] Subscribe to MQTT (to OPCUA Server) so that we can | XL
+- [x] Subscribe to MQTT (to OPCUA Server) so that we can | XL
   - see the incoming data -> we know it is running! It is ON
     - when it is first ON, we can email / notify people
   - OFF
