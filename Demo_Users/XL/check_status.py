@@ -27,3 +27,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+{'Channel 2 Derived Pk': '0.0008', 'timestamp': '2025-02-04 20:55:43'}

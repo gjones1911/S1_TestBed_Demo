@@ -9,8 +9,7 @@ import threading
 
 # Create log directory if it doesn't exist
 log_dir = 'log'
-if not os.path.exists(log_dir):
-    os.makedirs(log_dir)
+os.makedirs(log_dir, exist_ok=True)
 
 # Configure logging
 log_file_path = os.path.join(log_dir, 'my_mqtt.log')
@@ -22,10 +21,10 @@ logging.basicConfig(level=logging.INFO,
     ])
 
 # MQTT broker details
-MQTT_BROKER = "recoil.ise.utk.edu"  # Broker address
-MQTT_USER = "hivemquser"            # Username for MQTT broker
-MQTT_PWD = "mqAccess2024REC"        # Password for MQTT broker
-MQTT_PORT = 1883                    # Port for MQTT broker
+MQTT_BROKER = "recoil.ise.utk.edu"
+MQTT_USER = "hivemquser"
+MQTT_PWD = "mqAccess2024REC"
+MQTT_PORT = 1883
 
 class MyMQTT:
     def __init__(self, broker=MQTT_BROKER, port=MQTT_PORT, user=MQTT_USER, password=MQTT_PWD):
@@ -33,8 +32,8 @@ class MyMQTT:
         self.port = port
         self.user = user
         self.password = password
-        self.client_id = f'subscriber_{uuid.uuid4().hex[:8]}'
-        self.client = mqtt.Client(client_id=self.client_id, clean_session=True)
+        self.client_id = f'mqtt_{uuid.uuid4().hex[:12]}'
+        self.client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id=self.client_id, clean_session=False)
         self.broker_connection_status = False
         self.latest_payload = None
         self.stop_event = threading.Event()
@@ -61,16 +60,12 @@ class MyMQTT:
     def on_message(self, client, userdata, message):
         try:
             payload = message.payload.decode("utf-8")
-            if message.topic == "json_data": # sample topic
-                self.latest_payload = json.loads(payload)
-            else:
-                self.latest_payload = {f"{message.topic}": payload}
+            self.latest_payload = json.loads(payload) if message.topic == "json_data" else {f"{message.topic}": payload}
             self.latest_payload['timestamp'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
 
             # Create data directory if it doesn't exist
             data_dir = 'data'
-            if not os.path.exists(data_dir):
-                os.makedirs(data_dir)
+            os.makedirs(data_dir, exist_ok=True)
 
             # Append the payload to the data file
             data_file_path = os.path.join(data_dir, 'data.json')
@@ -109,12 +104,8 @@ class MyMQTT:
                 while not self.stop_event.is_set():
                     self.client.loop()
                     time.sleep(1)
-            except KeyboardInterrupt:
-                logging.info("Interrupted by user, stopping...")
-                self.disconnect()
             except Exception as e:
                 logging.error(f"An error occurred: {e}")
-                self.disconnect()
 
         subscription_thread = threading.Thread(target=run_subscription)
         subscription_thread.daemon = True
@@ -130,19 +121,16 @@ class MyMQTT:
 if __name__ == "__main__":
     mqtt_client = MyMQTT()
     mqtt_client.connect()
-    # mqtt_client.subscribe("json_data") # json_data
-    mqtt_client.subscribe("Channel 1 Direct") # sample
+    mqtt_client.subscribe("Channel 1 Direct RMS")  # sample json_data
 
     try:
         while True:
             time.sleep(1)
-
             payload = mqtt_client.get_latest_payload()
             if payload:
                 print(f"Latest payload: {payload}")
             else:
                 print("No new payload received.")
-
     except KeyboardInterrupt:
         mqtt_client.disconnect()
         logging.info("Program terminated by user")

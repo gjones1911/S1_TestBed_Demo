@@ -686,5 +686,673 @@
     {
         "Channel 2 Derived Pk": "0.0008",
         "timestamp": "2025-02-04 16:32:30"
+    },
+    {
+        "Channel 1 Direct": 0.0017,
+        "Channel 1 Direct RMS": 0.0006,
+        "Channel 1 Derived Pk": 0.0008,
+        "Channel 1 Velocity Pk": 0.0043,
+        "Channel 1 Velocity RMS": 0.002,
+        "Channel 1 Bias": -11.9859,
+        "Channel 2 Direct": 0.0018,
+        "Channel 2 Direct RMS": 0.0006,
+        "Channel 2 Derived Pk": 0.0009,
+        "Channel 2 Velocity Pk": 0.0043,
+        "Channel 2 Velocity RMS": 0.0021,
+        "Channel 2 Bias": -12.028,
+        "Volts": 0,
+        "timestamp": "2025-02-04 20:13:51"
+    },
+    {
+        "Channel 1 Direct": 0.0015,
+        "Channel 1 Direct RMS": 0.0005,
+        "Channel 1 Derived Pk": 0.0007,
+        "Channel 1 Velocity Pk": 0.0025,
+        "Channel 1 Velocity RMS": 0.0014,
+        "Channel 1 Bias": -11.9859,
+        "Channel 2 Direct": 0.0015,
+        "Channel 2 Direct RMS": 0.0006,
+        "Channel 2 Derived Pk": 0.0009,
+        "Channel 2 Velocity Pk": 0.0029,
+        "Channel 2 Velocity RMS": 0.002,
+        "Channel 2 Bias": -12.028,
+        "Volts": 0,
+        "timestamp": "2025-02-04 20:13:53"
+    },
+    {
+        "Channel 1 Direct": 0.0015,
+        "Channel 1 Direct RMS": 0.0005,
+        "Channel 1 Derived Pk": 0.0006,
+        "Channel 1 Velocity Pk": 0.0027,
+        "Channel 1 Velocity RMS": 0.0011,
+        "Channel 1 Bias": -11.9859,
+        "Channel 2 Direct": 0.0014,
+        "Channel 2 Direct RMS": 0.0005,
+        "Channel 2 Derived Pk": 0.0007,
+        "Channel 2 Velocity Pk": 0.0026,
+        "Channel 2 Velocity RMS": 0.001,
+        "Channel 2 Bias": -12.028,
+        "Volts": 0,
+        "timestamp": "2025-02-04 20:13:55"
+    },
+    {
+        "Channel 1 Direct": 0.0015,
+        "Channel 1 Direct RMS": 0.0005,
+        "Channel 1 Derived Pk": 0.0007,
+        "Channel 1 Velocity Pk": 0.0026,
+        "Channel 1 Velocity RMS": 0.0012,
+        "Channel 1 Bias": -11.9859,
+        "Channel 2 Direct": 0.0016,
+        "Channel 2 Direct RMS": 0.0005,
+        "Channel 2 Derived Pk": 0.0008,
+        "Channel 2 Velocity Pk": 0.0026,
+        "Channel 2 Velocity RMS": 0.0011,
+        "Channel 2 Bias": -12.028,
+        "Volts": 0,
+        "timestamp": "2025-02-04 20:13:57"
+    },
+    {
+        "Channel 1 Direct": 0.0014,
+        "Channel 1 Direct RMS": 0.0005,
+        "Channel 1 Derived Pk": 0.0007,
+        "Channel 1 Velocity Pk": 0.0021,
+        "Channel 1 Velocity RMS": 0.0012,
+        "Channel 1 Bias": -11.9856,
+        "Channel 2 Direct": 0.0015,
+        "Channel 2 Direct RMS": 0.0005,
+        "Channel 2 Derived Pk": 0.0007,
+        "Channel 2 Velocity Pk": 0.0021,
+        "Channel 2 Velocity RMS": 0.0011,
+        "Channel 2 Bias": -12.0277,
+        "Volts": 0,
+        "timestamp": "2025-02-04 20:21:15"
+    },
+    {
+        "Channel 1 Direct": 0.0015,
+        "Channel 1 Direct RMS": 0.0006,
+        "Channel 1 Derived Pk": 0.0008,
+        "Channel 1 Velocity Pk": 0.0026,
+        "Channel 1 Velocity RMS": 0.0016,
+        "Channel 1 Bias": -11.9856,
+        "Channel 2 Direct": 0.0016,
+        "Channel 2 Direct RMS": 0.0006,
+        "Channel 2 Derived Pk": 0.0008,
+        "Channel 2 Velocity Pk": 0.0029,
+        "Channel 2 Velocity RMS": 0.0015,
+        "Channel 2 Bias": -12.0277,
+        "Volts": 0,
+        "timestamp": "2025-02-04 20:21:17"
+    },
+    {
+        "Channel 1 Direct": 0.0016,
+        "Channel 1 Direct RMS": 0.0007,
+        "Channel 1 Derived Pk": 0.001,
+        "Channel 1 Velocity Pk": 0.0032,
+        "Channel 1 Velocity RMS": 0.0024,
+        "Channel 1 Bias": -11.9856,
+        "Channel 2 Direct": 0.0017,
+        "Channel 2 Direct RMS": 0.0006,
+        "Channel 2 Derived Pk": 0.0009,
+        "Channel 2 Velocity Pk": 0.0031,
+        "Channel 2 Velocity RMS": 0.002,
+        "Channel 2 Bias": -12.0277,
+        "Volts": 0,
+        "timestamp": "2025-02-04 20:21:19"
+    },
+    {
+        "Channel 1 Direct": 0.0014,
+        "Channel 1 Direct RMS": 0.0005,
+        "Channel 1 Derived Pk": 0.0007,
+        "Channel 1 Velocity Pk": 0.0019,
+        "Channel 1 Velocity RMS": 0.0009,
+        "Channel 1 Bias": -11.9856,
+        "Channel 2 Direct": 0.0014,
+        "Channel 2 Direct RMS": 0.0006,
+        "Channel 2 Derived Pk": 0.0008,
+        "Channel 2 Velocity Pk": 0.0019,
+        "Channel 2 Velocity RMS": 0.0012,
+        "Channel 2 Bias": -12.0277,
+        "Volts": 0,
+        "timestamp": "2025-02-04 20:21:54"
+    },
+    {
+        "Channel 1 Direct": 0.0014,
+        "Channel 1 Direct RMS": 0.0005,
+        "Channel 1 Derived Pk": 0.0007,
+        "Channel 1 Velocity Pk": 0.002,
+        "Channel 1 Velocity RMS": 0.001,
+        "Channel 1 Bias": -11.9856,
+        "Channel 2 Direct": 0.0015,
+        "Channel 2 Direct RMS": 0.0005,
+        "Channel 2 Derived Pk": 0.0007,
+        "Channel 2 Velocity Pk": 0.0021,
+        "Channel 2 Velocity RMS": 0.001,
+        "Channel 2 Bias": -12.0277,
+        "Volts": 0,
+        "timestamp": "2025-02-04 20:21:56"
+    },
+    {
+        "Channel 1 Direct": 0.0014,
+        "Channel 1 Direct RMS": 0.0005,
+        "Channel 1 Derived Pk": 0.0007,
+        "Channel 1 Velocity Pk": 0.0019,
+        "Channel 1 Velocity RMS": 0.0009,
+        "Channel 1 Bias": -11.9856,
+        "Channel 2 Direct": 0.0014,
+        "Channel 2 Direct RMS": 0.0005,
+        "Channel 2 Derived Pk": 0.0007,
+        "Channel 2 Velocity Pk": 0.0018,
+        "Channel 2 Velocity RMS": 0.0009,
+        "Channel 2 Bias": -12.0277,
+        "Volts": 0,
+        "timestamp": "2025-02-04 20:21:58"
+    },
+    {
+        "Channel 1 Direct": 0.0014,
+        "Channel 1 Direct RMS": 0.0004,
+        "Channel 1 Derived Pk": 0.0006,
+        "Channel 1 Velocity Pk": 0.0019,
+        "Channel 1 Velocity RMS": 0.0008,
+        "Channel 1 Bias": -11.9856,
+        "Channel 2 Direct": 0.0013,
+        "Channel 2 Direct RMS": 0.0005,
+        "Channel 2 Derived Pk": 0.0006,
+        "Channel 2 Velocity Pk": 0.0018,
+        "Channel 2 Velocity RMS": 0.0009,
+        "Channel 2 Bias": -12.0277,
+        "Volts": 0,
+        "timestamp": "2025-02-04 20:22:00"
+    },
+    {
+        "Channel 1 Direct": 0.0014,
+        "Channel 1 Direct RMS": 0.0005,
+        "Channel 1 Derived Pk": 0.0007,
+        "Channel 1 Velocity Pk": 0.0017,
+        "Channel 1 Velocity RMS": 0.0011,
+        "Channel 1 Bias": -11.9856,
+        "Channel 2 Direct": 0.0014,
+        "Channel 2 Direct RMS": 0.0005,
+        "Channel 2 Derived Pk": 0.0007,
+        "Channel 2 Velocity Pk": 0.0021,
+        "Channel 2 Velocity RMS": 0.0012,
+        "Channel 2 Bias": -12.0277,
+        "Volts": 0,
+        "timestamp": "2025-02-04 20:22:02"
+    },
+    {
+        "Channel 1 Direct": 0.0013,
+        "Channel 1 Direct RMS": 0.0004,
+        "Channel 1 Derived Pk": 0.0006,
+        "Channel 1 Velocity Pk": 0.0017,
+        "Channel 1 Velocity RMS": 0.0008,
+        "Channel 1 Bias": -11.9855,
+        "Channel 2 Direct": 0.0013,
+        "Channel 2 Direct RMS": 0.0005,
+        "Channel 2 Derived Pk": 0.0006,
+        "Channel 2 Velocity Pk": 0.002,
+        "Channel 2 Velocity RMS": 0.0008,
+        "Channel 2 Bias": -12.0277,
+        "Volts": 0,
+        "timestamp": "2025-02-04 20:22:04"
+    },
+    {
+        "Channel 1 Direct": 0.0021,
+        "Channel 1 Direct RMS": 0.001,
+        "Channel 1 Derived Pk": 0.0015,
+        "Channel 1 Velocity Pk": 0.0058,
+        "Channel 1 Velocity RMS": 0.0042,
+        "Channel 1 Bias": -11.9857,
+        "Channel 2 Direct": 0.002,
+        "Channel 2 Direct RMS": 0.001,
+        "Channel 2 Derived Pk": 0.0014,
+        "Channel 2 Velocity Pk": 0.0054,
+        "Channel 2 Velocity RMS": 0.0038,
+        "Channel 2 Bias": -12.0277,
+        "Volts": 0,
+        "timestamp": "2025-02-04 20:22:26"
+    },
+    {
+        "Channel 1 Direct": 0.0018,
+        "Channel 1 Direct RMS": 0.0007,
+        "Channel 1 Derived Pk": 0.001,
+        "Channel 1 Velocity Pk": 0.0041,
+        "Channel 1 Velocity RMS": 0.0025,
+        "Channel 1 Bias": -11.9856,
+        "Channel 2 Direct": 0.0018,
+        "Channel 2 Direct RMS": 0.0007,
+        "Channel 2 Derived Pk": 0.001,
+        "Channel 2 Velocity Pk": 0.0043,
+        "Channel 2 Velocity RMS": 0.0023,
+        "Channel 2 Bias": -12.0277,
+        "Volts": 0,
+        "timestamp": "2025-02-04 20:22:28"
+    },
+    {
+        "Channel 1 Direct": 0.0019,
+        "Channel 1 Direct RMS": 0.0007,
+        "Channel 1 Derived Pk": 0.0009,
+        "Channel 1 Velocity Pk": 0.0043,
+        "Channel 1 Velocity RMS": 0.0019,
+        "Channel 1 Bias": -11.9856,
+        "Channel 2 Direct": 0.0019,
+        "Channel 2 Direct RMS": 0.0007,
+        "Channel 2 Derived Pk": 0.0009,
+        "Channel 2 Velocity Pk": 0.0042,
+        "Channel 2 Velocity RMS": 0.0018,
+        "Channel 2 Bias": -12.0276,
+        "Volts": 0,
+        "timestamp": "2025-02-04 20:22:30"
+    },
+    {
+        "Channel 1 Direct": 0.0017,
+        "Channel 1 Direct RMS": 0.0008,
+        "Channel 1 Derived Pk": 0.0012,
+        "Channel 1 Velocity Pk": 0.0037,
+        "Channel 1 Velocity RMS": 0.0027,
+        "Channel 1 Bias": -11.9856,
+        "Channel 2 Direct": 0.0017,
+        "Channel 2 Direct RMS": 0.0007,
+        "Channel 2 Derived Pk": 0.001,
+        "Channel 2 Velocity Pk": 0.0035,
+        "Channel 2 Velocity RMS": 0.0024,
+        "Channel 2 Bias": -12.0276,
+        "Volts": 0,
+        "timestamp": "2025-02-04 20:22:32"
+    },
+    {
+        "Channel 1 Direct": 0.0016,
+        "Channel 1 Direct RMS": 0.0007,
+        "Channel 1 Derived Pk": 0.001,
+        "Channel 1 Velocity Pk": 0.0033,
+        "Channel 1 Velocity RMS": 0.0023,
+        "Channel 1 Bias": -11.9856,
+        "Channel 2 Direct": 0.0016,
+        "Channel 2 Direct RMS": 0.0007,
+        "Channel 2 Derived Pk": 0.001,
+        "Channel 2 Velocity Pk": 0.0032,
+        "Channel 2 Velocity RMS": 0.0021,
+        "Channel 2 Bias": -12.0276,
+        "Volts": 0,
+        "timestamp": "2025-02-04 20:22:34"
+    },
+    {
+        "Channel 1 Direct": 0.0015,
+        "Channel 1 Direct RMS": 0.0006,
+        "Channel 1 Derived Pk": 0.0009,
+        "Channel 1 Velocity Pk": 0.0026,
+        "Channel 1 Velocity RMS": 0.0018,
+        "Channel 1 Bias": -11.9856,
+        "Channel 2 Direct": 0.0016,
+        "Channel 2 Direct RMS": 0.0006,
+        "Channel 2 Derived Pk": 0.0009,
+        "Channel 2 Velocity Pk": 0.0026,
+        "Channel 2 Velocity RMS": 0.0018,
+        "Channel 2 Bias": -12.0276,
+        "Volts": 0,
+        "timestamp": "2025-02-04 20:22:36"
+    },
+    {
+        "Channel 1 Direct RMS": "0.0005",
+        "timestamp": "2025-02-04 20:23:04"
+    },
+    {
+        "Channel 1 Direct RMS": "0.0007",
+        "timestamp": "2025-02-04 20:23:06"
+    },
+    {
+        "Channel 1 Direct RMS": "0.0005",
+        "timestamp": "2025-02-04 20:23:08"
+    },
+    {
+        "Channel 1 Direct RMS": "0.0005",
+        "timestamp": "2025-02-04 20:23:10"
+    },
+    {
+        "Channel 1 Direct RMS": "0.0005",
+        "timestamp": "2025-02-04 20:23:12"
+    },
+    {
+        "Channel 1 Direct RMS": "0.0005",
+        "timestamp": "2025-02-04 20:23:14"
+    },
+    {
+        "Channel 1 Direct RMS": "0.0005",
+        "timestamp": "2025-02-04 20:23:16"
+    },
+    {
+        "Channel 1 Direct RMS": "0.0004",
+        "timestamp": "2025-02-04 20:23:18"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0007",
+        "timestamp": "2025-02-04 20:23:34"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0007",
+        "timestamp": "2025-02-04 20:23:34"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0006",
+        "timestamp": "2025-02-04 20:23:42"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0008",
+        "timestamp": "2025-02-04 20:23:44"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0008",
+        "timestamp": "2025-02-04 20:23:46"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0009",
+        "timestamp": "2025-02-04 20:23:48"
+    },
+    {
+        "Channel 2 Derived Pk": "0.001",
+        "timestamp": "2025-02-04 20:23:50"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0008",
+        "timestamp": "2025-02-04 20:23:52"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0008",
+        "timestamp": "2025-02-04 20:23:52"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0008",
+        "timestamp": "2025-02-04 20:23:56"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0015",
+        "timestamp": "2025-02-04 20:25:49"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0008",
+        "timestamp": "2025-02-04 20:25:51"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0008",
+        "timestamp": "2025-02-04 20:25:53"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0015",
+        "timestamp": "2025-02-04 20:25:55"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0007",
+        "timestamp": "2025-02-04 20:25:57"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0007",
+        "timestamp": "2025-02-04 20:25:59"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0008",
+        "timestamp": "2025-02-04 20:26:01"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0007",
+        "timestamp": "2025-02-04 20:26:03"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0006",
+        "timestamp": "2025-02-04 20:26:05"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0007",
+        "timestamp": "2025-02-04 20:26:09"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0007",
+        "timestamp": "2025-02-04 20:26:11"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0008",
+        "timestamp": "2025-02-04 20:26:13"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0008",
+        "timestamp": "2025-02-04 20:26:15"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0007",
+        "timestamp": "2025-02-04 20:26:17"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0008",
+        "timestamp": "2025-02-04 20:26:19"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0007",
+        "timestamp": "2025-02-04 20:26:21"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0007",
+        "timestamp": "2025-02-04 20:26:23"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0008",
+        "timestamp": "2025-02-04 20:26:25"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0008",
+        "timestamp": "2025-02-04 20:26:27"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0008",
+        "timestamp": "2025-02-04 20:26:29"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0008",
+        "timestamp": "2025-02-04 20:26:31"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0007",
+        "timestamp": "2025-02-04 20:26:33"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0008",
+        "timestamp": "2025-02-04 20:26:35"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0006",
+        "timestamp": "2025-02-04 20:26:37"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0007",
+        "timestamp": "2025-02-04 20:26:39"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0014",
+        "timestamp": "2025-02-04 20:26:41"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0009",
+        "timestamp": "2025-02-04 20:26:43"
+    },
+    {
+        "Channel 2 Derived Pk": "0.001",
+        "timestamp": "2025-02-04 20:26:45"
+    },
+    {
+        "Channel 2 Derived Pk": "0.001",
+        "timestamp": "2025-02-04 20:26:47"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0007",
+        "timestamp": "2025-02-04 20:26:49"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0008",
+        "timestamp": "2025-02-04 20:26:51"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0007",
+        "timestamp": "2025-02-04 20:26:53"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0008",
+        "timestamp": "2025-02-04 20:26:55"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0008",
+        "timestamp": "2025-02-04 20:26:57"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0008",
+        "timestamp": "2025-02-04 20:26:59"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0017",
+        "timestamp": "2025-02-04 20:27:01"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0007",
+        "timestamp": "2025-02-04 20:27:03"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0007",
+        "timestamp": "2025-02-04 20:27:05"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0008",
+        "timestamp": "2025-02-04 20:27:07"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0007",
+        "timestamp": "2025-02-04 20:55:39"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0007",
+        "timestamp": "2025-02-04 20:55:39"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0009",
+        "timestamp": "2025-02-04 20:55:41"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0009",
+        "timestamp": "2025-02-04 20:55:41"
+    },
+    {
+        "Channel 2 Derived Pk": "0.0008",
+        "timestamp": "2025-02-04 20:55:43"
+    },
+    {
+        "Channel 2 Derived Pk": "9",
+        "timestamp": "2025-02-04 22:38:42"
+    },
+    {
+        "Channel 2 Derived Pk": "9",
+        "timestamp": "2025-02-04 22:38:45"
+    },
+    {
+        "Channel 2 Derived Pk": "5",
+        "timestamp": "2025-02-04 22:38:48"
+    },
+    {
+        "Channel 2 Derived Pk": "8",
+        "timestamp": "2025-02-04 22:38:51"
+    },
+    {
+        "Channel 2 Derived Pk": "1",
+        "timestamp": "2025-02-04 22:38:52"
+    },
+    {
+        "Channel 2 Derived Pk": "9",
+        "timestamp": "2025-02-04 22:38:55"
+    },
+    {
+        "Channel 2 Derived Pk": "8",
+        "timestamp": "2025-02-04 22:38:58"
+    },
+    {
+        "Channel 2 Derived Pk": "3",
+        "timestamp": "2025-02-04 22:39:01"
+    },
+    {
+        "Channel 2 Derived Pk": "2",
+        "timestamp": "2025-02-04 22:39:02"
+    },
+    {
+        "Channel 2 Derived Pk": "3",
+        "timestamp": "2025-02-04 22:39:03"
+    },
+    {
+        "Channel 2 Derived Pk": "3",
+        "timestamp": "2025-02-04 22:39:03"
+    },
+    {
+        "Channel 2 Derived Pk": "6",
+        "timestamp": "2025-02-04 22:39:04"
+    },
+    {
+        "Channel 2 Derived Pk": "9",
+        "timestamp": "2025-02-04 22:39:05"
+    },
+    {
+        "Channel 2 Derived Pk": "0",
+        "timestamp": "2025-02-04 22:39:06"
+    },
+    {
+        "Channel 2 Derived Pk": "0",
+        "timestamp": "2025-02-04 22:39:06"
+    },
+    {
+        "Channel 2 Derived Pk": "0",
+        "timestamp": "2025-02-04 22:39:07"
+    },
+    {
+        "Channel 2 Derived Pk": "1",
+        "timestamp": "2025-02-04 22:39:08"
+    },
+    {
+        "Channel 2 Derived Pk": "1",
+        "timestamp": "2025-02-04 22:39:09"
+    },
+    {
+        "Channel 2 Derived Pk": "0",
+        "timestamp": "2025-02-04 22:39:10"
+    },
+    {
+        "Channel 2 Derived Pk": "0",
+        "timestamp": "2025-02-04 22:39:10"
+    },
+    {
+        "Channel 2 Derived Pk": "4",
+        "timestamp": "2025-02-04 22:39:13"
+    },
+    {
+        "Channel 2 Derived Pk": "4",
+        "timestamp": "2025-02-04 22:39:13"
+    },
+    {
+        "Channel 2 Derived Pk": "1",
+        "timestamp": "2025-02-04 22:39:14"
+    },
+    {
+        "Channel 2 Derived Pk": "0",
+        "timestamp": "2025-02-04 22:39:15"
+    },
+    {
+        "Channel 2 Derived Pk": "0",
+        "timestamp": "2025-02-04 22:39:15"
+    },
+    {
+        "Channel 2 Derived Pk": "3",
+        "timestamp": "2025-02-04 22:39:16"
+    },
+    {
+        "Channel 2 Derived Pk": "5",
+        "timestamp": "2025-02-04 22:40:20"
+    },
+    {
+        "Channel 2 Derived Pk": "7",
+        "timestamp": "2025-02-04 22:40:25"
+    },
+    {
+        "Channel 2 Derived Pk": "5",
+        "timestamp": "2025-02-04 22:40:28"
     }
 ]

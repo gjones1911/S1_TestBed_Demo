@@ -1,0 +1,8 @@
+gradio
+requests
+paho-mqtt
+matplotlib
+seaborn
+pandas
+numpy
+datetime
