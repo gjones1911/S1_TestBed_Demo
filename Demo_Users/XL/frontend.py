@@ -8,22 +8,28 @@ import time
 import threading
 import datetime
 import json
+import pytz  # Add this import for timezone handling
 
 from my_mqtt import MyMQTT
 
-mqtt_client = MyMQTT()
+try:
+    mqtt_client = MyMQTT()
 
-mqtt_client.connect()
+    mqtt_client.connect()
 
-TOPIC = "Channel 2 Derived Pk"
-mqtt_client.subscribe(TOPIC) # use any topic
+    TOPIC = "Channel 2 Derived Pk"
+
+    mqtt_client.subscribe(TOPIC) # use any topic
+except Exception as e:
+    print(f"MQTT connection failed: {e}. Retrying in 5 seconds...")
+    time.sleep(5)
 
 # Initialize an empty DataFrame
 data = pd.DataFrame(columns=["Time", "Value"])
 
 # Define constraints
 max_points = 100  # Maximum number of points to keep
-y_min, y_max = -3, 3  # Fixed Y-axis range
+# y_min, y_max = -3, 3  # Fixed Y-axis range
 
 # Thread lock to prevent race conditions
 data_lock = threading.Lock()
@@ -35,7 +41,19 @@ def generate_data():
     
     while True:
         with data_lock:
-            new_time = datetime.datetime.now().astimezone().replace(microsecond=0)  # Use local time and remove microseconds
+            # Check if the client is connected
+            if not mqtt_client.broker_connection_status:
+                try:
+                    mqtt_client.connect()
+                    mqtt_client.subscribe(TOPIC)
+                    print("Reconnected to MQTT broker.")
+                except Exception as e:
+                    # mqtt_client.disconnect()
+                    print(f"Disconnecting: {e}. Retrying in 5 seconds...")
+                    time.sleep(5)
+                    continue  # Skip the rest of the loop and retry
+
+            new_time = datetime.datetime.now(pytz.timezone('US/Eastern')).replace(microsecond=0)  # Use local Eastern time and remove microseconds
             
             # Ensure we only add ONE point per second
             if new_time == last_time:
@@ -47,9 +65,10 @@ def generate_data():
             try:
                 payload = mqtt_client.get_latest_payload()
                 
-                new_value = payload[TOPIC]  # Generate a random value
+                new_value = float(payload[TOPIC])  # Ensure the value is a double
             except Exception as e:
-                continue
+                # mqtt_client.disconnect()
+                new_value = 0  # Set value to 0 if there's an exception
                 
             # Create new entry            
             new_entry = pd.DataFrame({"Time": [new_time], "Value": [new_value]})
@@ -71,26 +90,31 @@ if not hasattr(generate_data, "started"):
 def plot_data():
     global data
     while True:
+        plt.style.use('dark_background')  # Set the plot style to dark background
         plt.figure(figsize=(8, 4))
         
         if not data.empty:
+            # Convert the 'Time' column to the desired timezone
+            data['Time'] = data['Time'].dt.tz_convert('US/Eastern')
+            
             # Define the x-axis window anchored to the current time.
             # This window will always span the last (max_points-1) seconds.
-            current_time = datetime.datetime.now().astimezone()
-            window = datetime.timedelta(seconds=max_points - 1)
+            current_time = datetime.datetime.now(pytz.timezone('US/Eastern'))
+            window = datetime.timedelta(seconds=(max_points - 1))
             plt.xlim(current_time - window, current_time)
-            plt.ylim(y_min, y_max)
+            # plt.ylim(y_min, y_max)
             
-            sns.lineplot(x="Time", y="Value", data=data, marker="o", color="b")
+            sns.lineplot(x="Time", y="Value", data=data, marker="o", color="darkorange")
             
             # Format x-axis ticks as HH:MM:SS
             plt.xticks(rotation=45)
             ax = plt.gca()
-            ax.xaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
+            # Convert the datetime to local time before formatting
+            ax.xaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S", tz=pytz.timezone('US/Eastern')))
         
-        plt.xlabel("Time (HH:MM:SS)")
-        plt.ylabel("Value")
-        plt.title("Real-time Data Stream (Simulated)")
+        plt.xlabel("Eastern Time (HH:MM:SS)")
+        plt.ylabel(TOPIC) # value
+        plt.title("S1 Testbed Real-time Data Streaming)")
         plt.grid()
         plt.tight_layout()
         

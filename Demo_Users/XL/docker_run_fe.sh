@@ -1,7 +1,7 @@
 #!/bin/bash
 
-## local test
-docker run --name local_s1 -p 8888:7860  ilabutk/s1:0.1
+## local test: --name local_s1
+docker run --rm -p 8888:7860 ilabutk/s1:0.2
 
 ## PROD
 # ```
