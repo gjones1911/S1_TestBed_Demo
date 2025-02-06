@@ -1,0 +1,20 @@
+# ========================================================================
+# 🏆 Mosquitto ACL Configuration
+# ========================================================================
+
+# 🔹 Allow full access to the admin user
+user admin
+topic readwrite #
+
+# 🔹 Limited access for specific users
+user sensor_client
+topic read sensors/+
+topic write sensors/data
+
+user dashboard_client
+topic read dashboard/+
+topic write dashboard/logs
+
+# 🔹 Deny access to all other users by default
+pattern write denied/#
+pattern read denied/#

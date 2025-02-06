@@ -1,4 +1,4 @@
-version: '3.8'
+# version: '3.8'
 
 services:
   # 🚀 MQTT Broker (Mosquitto)
@@ -54,6 +54,23 @@ services:
       - ./grafana/config/grafana.ini:/etc/grafana/grafana.ini:ro  # Config file correctly mapped
     restart: always
 
+  # 🛢 MySQL Database
+  mysql:
+    image: mysql:8.0
+    platform: linux/amd64
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: my_user
+      MYSQL_PASSWORD: my_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql  # Persistent Storage
+
 volumes:
   influxdb_data:  # Persistent Volume for InfluxDB
   grafana_data:   # Persistent Volume for Grafana
+  mysql_data:     # Persistent Volume for MySQL
