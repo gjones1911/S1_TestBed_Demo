@@ -1,3 +1,10 @@
 # logs & links
-- https://viridian.ise.utk.edu:8000/user/xli27/lab/tree/projects/s1_demo_xl/demo_xl_v2.ipynb
-    - runs
+- https://viridian.ise.utk.edu:8000/user/xli27/lab/tree/projects/s1_demo_xl/
+    - dev folder
+
+# dockerization and work flow:
+
+- ./docker_build_image_fe.sh
+- ./docker_run_fe.sh
+- http://localhost:8888/
+    - image: ![1738814240037](image/readme/1738814240037.png)
