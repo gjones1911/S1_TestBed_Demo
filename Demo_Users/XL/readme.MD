@@ -7,4 +7,10 @@
 - ./docker_build_image_fe.sh
 - ./docker_run_fe.sh
 - http://localhost:8888/
-    - image: ![1738814240037](image/readme/1738814240037.png)
+    - image: ![1738814240037](DIY/image/readme/1738814240037.png)
+
+
+# IDEA
+- Production mode
+- Scalable & reliable solutions 
+    - Grafana, InfluxDB
