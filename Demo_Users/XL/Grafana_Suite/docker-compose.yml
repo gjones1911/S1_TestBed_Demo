@@ -36,7 +36,7 @@ services:
     environment:
       - INFLUXDB_DB=sensors
       - INFLUXDB_USER=admin
-      - INFLUXDB_USER_PASSWORD=admin123
+      - INFLUXDB_USER_PASSWORD=secrets4admin
     restart: always
 
   # 🎨 Grafana (Visualization)
@@ -48,7 +48,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_PASSWORD=SuperSecurePassword123!
     volumes:
       - grafana_data:/var/lib/grafana  # Persistent Storage
       - ./grafana/config/grafana.ini:/etc/grafana/grafana.ini:ro  # Config file correctly mapped

@@ -8,25 +8,37 @@ import paho.mqtt.client as mqtt
 from random import randrange
 import time
 import uuid
+import json
 
 # mqttBroker = "mqtt.eclipseprojects.io"
 # mqttBroker = "broker.hivemq.com"
 mqttBroker = "localhost"
 # mqttBroker ="localhost" 
 
+try:
+    client_id = f'Pub_xl_{uuid.uuid4().hex[:8]}'
+    client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id=client_id, clean_session=False)
 
-client_id = f'Publisher_xl_{uuid.uuid4().hex[:8]}'
-client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id=client_id, clean_session=False)
+    ## with pwd
+    client.username_pw_set(username="admin",password="secret!99")
+    # client.username_pw_set(username="hivemquser",password="mqAccess2024REC")
 
-## with pwd
-# client.username_pw_set(username="admin",password="secret!99")
-client.username_pw_set(username="hivemquser",password="mqAccess2024REC")
+    client.connect(mqttBroker)
 
-client.connect(mqttBroker)
+    while True:       
+        randNumber = randrange(0, 1000) / 100
+        # Create a JSON message
+        # Include timestamp in ISO 8601 format
+        payload = json.dumps({
+            "temperature": randNumber,
+            "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ")  # ISO 8601 UTC format
+        })
 
-while True:
-    randNumber = randrange(10) 
-    client.publish("sensors/temperature", randNumber)
-    randNumber = randrange(0, 1000) / 100
-    print(f"Just published {randNumber} to Topic sensors/temperature")
-    time.sleep(1)
+        # Publish as a JSON object
+        client.publish("sensors/temperature", payload)
+
+        print(f"Just published {randNumber} to Topic sensors/temperature")
+        time.sleep(1)
+except Exception as e:
+    print(f"An error occurred: {e}")
+
