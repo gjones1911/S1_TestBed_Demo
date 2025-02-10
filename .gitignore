@@ -78,3 +78,4 @@ log/
 Demo_Users/XL/data/
 
 mosquitto.db
+Demo_Users/XL/Grafana_Suite/mosquitto/data/mosquitto.db
