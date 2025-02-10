@@ -77,3 +77,4 @@ log/
 **/log/
 Demo_Users/XL/data/
 
+mosquitto.db
