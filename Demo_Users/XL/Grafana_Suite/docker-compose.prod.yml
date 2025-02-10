@@ -59,7 +59,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=SuperSecurePassword123!
+      - GF_SECURITY_ADMIN_PASSWORD=grafanaAdmin2025Pass!
       - VIRTUAL_HOST=demo1.viridian.ise.utk.edu
       - LETSENCRYPT_HOST=demo1.viridian.ise.utk.edu
       - LETSENCRYPT_EMAIL=ilab.utk@gmail.com
@@ -78,7 +78,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ViridianMySQL2025Root
-      MYSQL_DATABASE: viridiandb
+      MYSQL_DATABASE: viridianmydb
       MYSQL_USER: viridian_db_user
       MYSQL_PASSWORD: viridian_db_user_2025_Pass
     ports:
