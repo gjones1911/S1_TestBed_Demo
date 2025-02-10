@@ -57,7 +57,7 @@ services:
     depends_on:
       - influxdb
     ports:
-      - "3000:3000"
+      - "5001:3000"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=grafanaAdmin2025Pass!
       - VIRTUAL_HOST=demo1.viridian.ise.utk.edu
