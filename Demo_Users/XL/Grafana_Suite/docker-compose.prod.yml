@@ -15,8 +15,8 @@ services:
     restart: always
     environment: 
     # to be changed to the actual domain name!!
-      - VIRTUAL_HOST=demo2.viridian.ise.utk.edu
-      - LETSENCRYPT_HOST=demo2.viridian.ise.utk.edu
+      - VIRTUAL_HOST=mqtt.viridian.ise.utk.edu
+      - LETSENCRYPT_HOST=mqtt.viridian.ise.utk.edu
       - LETSENCRYPT_EMAIL=ilab.utk@gmail.com
     networks:
       - viridian_network
@@ -60,8 +60,8 @@ services:
       - "5001:3000"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=grafanaAdmin2025Pass!
-      - VIRTUAL_HOST=demo1.viridian.ise.utk.edu
-      - LETSENCRYPT_HOST=demo1.viridian.ise.utk.edu
+      - VIRTUAL_HOST=grafana.viridian.ise.utk.edu
+      - LETSENCRYPT_HOST=grafana.viridian.ise.utk.edu
       - LETSENCRYPT_EMAIL=ilab.utk@gmail.com
     volumes:
       - grafana_data:/var/lib/grafana  # Persistent Storage
