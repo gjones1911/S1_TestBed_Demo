@@ -1,8 +1,8 @@
-# logs & links
+# logs & links /DIY
 - https://viridian.ise.utk.edu:8000/user/xli27/lab/tree/projects/s1_demo_xl/
     - dev folder
 
-# dockerization and work flow:
+# dockerization and work flow: /DIY
 
 - ./docker_build_image_fe.sh
 - ./docker_run_fe.sh
@@ -10,7 +10,7 @@
     - image: ![1738814240037](DIY/image/readme/1738814240037.png)
 
 
-# IDEA
+# IDEA /Prod -> /Grafana_Suite
 - Production mode
 - Scalable & reliable solutions 
     - Grafana, InfluxDB

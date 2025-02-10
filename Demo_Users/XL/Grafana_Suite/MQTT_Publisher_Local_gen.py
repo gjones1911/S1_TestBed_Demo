@@ -10,23 +10,23 @@ import time
 import uuid
 import json
 
-# mqttBroker = "mqtt.eclipseprojects.io"
-# mqttBroker = "broker.hivemq.com"
-mqttBroker = "localhost"
-# mqttBroker ="localhost" 
+MQTT_BROKER = "localhost" # local mosquitto broker
+MQTT_USER = "admin"
+MQTT_PWD = "secret!99"
+MQTT_PORT = 1883
+MQTT_TOPIC = "sensors/temperature"
 
 try:
     client_id = f'Pub_xl_{uuid.uuid4().hex[:8]}'
     client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id=client_id, clean_session=False)
 
     ## with pwd
-    client.username_pw_set(username="admin",password="secret!99")
-    # client.username_pw_set(username="hivemquser",password="mqAccess2024REC")
+    client.username_pw_set(username=MQTT_USER,password=MQTT_PWD)
 
-    client.connect(mqttBroker)
+    client.connect(MQTT_BROKER)
 
     while True:       
-        randNumber = randrange(0, 1000) / 100
+        randNumber = randrange(0, 1000) / 10
         # Create a JSON message
         # Include timestamp in ISO 8601 format
         payload = json.dumps({
