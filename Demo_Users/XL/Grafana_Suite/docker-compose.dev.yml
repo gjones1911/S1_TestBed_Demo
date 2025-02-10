@@ -34,9 +34,9 @@ services:
     volumes:
       - influxdb_data:/var/lib/influxdb  # Persistent Storage
     environment:
-      - INFLUXDB_DB=sensors
+      - INFLUXDB_DB=vfluxdb
       - INFLUXDB_USER=admin
-      - INFLUXDB_USER_PASSWORD=secrets4admin
+      - INFLUXDB_USER_PASSWORD=secrets4InfluxAdmin
     restart: always
 
   # 🎨 Grafana (Visualization)
