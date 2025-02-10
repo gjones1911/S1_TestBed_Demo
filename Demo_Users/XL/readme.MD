@@ -14,3 +14,11 @@
 - Production mode
 - Scalable & reliable solutions 
     - Grafana, InfluxDB
+
+# log
+- grafana published to viridian along with telegraf/mosquitto/mysql. 2/10/25
+    - under the name `demo1` for now
+    - requested name `grafana`
+- local user added 
+    - xli27@utk.edu `secret!99`
+- add dashboard by id
