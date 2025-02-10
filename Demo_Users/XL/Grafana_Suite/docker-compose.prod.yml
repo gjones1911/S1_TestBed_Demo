@@ -93,5 +93,3 @@ volumes:
   grafana_data:   # Persistent Volume for Grafana
   mysql_data:     # Persistent Volume for MySQL
 
-networks:
-  viridian_network:
