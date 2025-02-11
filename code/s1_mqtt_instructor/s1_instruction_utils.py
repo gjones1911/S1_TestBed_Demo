@@ -48,7 +48,7 @@ MQTT_KEEPALIVE = 60
 DEMO_TIME_OUT = 7200                    # how long before the demo will run before stopping (uses sleep)
 PUBLISH_DELAY=5
 CLIENT_ID = "S1_Fault_Instructor"
-MQTT_BROKER = "recoil.ise.utk.edu"
+MQTT_BROKER = "localhost" #"recoil.ise.utk.edu"
 
 MQTT_USER = "hivemquser"
 MQTT_PWD = "mqAccess2024REC"

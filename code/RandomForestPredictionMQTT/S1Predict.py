@@ -11,7 +11,7 @@ import argparse
 import signal
 pid = str(os.getpid())
 # MQTT Broker
-MQTT_BROKER = 'recoil.ise.utk.edu'
+MQTT_BROKER = 'localhost' # recoil.ise.utk.edu
 # MQTT Username/Pwd
 MQTT_USER = 'hivemquser'
 MQTT_PWD = 'mqAccess2024REC'

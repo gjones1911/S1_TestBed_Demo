@@ -98,7 +98,7 @@ class SubHandler(object):
         print("Python: New event", event)
         
 # For MQTT Client creation (data publisher)
-mqttBroker = 'recoil.ise.utk.edu'
+mqttBroker = 'localhost' # 'recoil.ise.utk.edu'
 pub_client = mqtt.Client(client_id='S1 Publisher')
 pub_client.username_pw_set(username = 'hivemquser', password = 'mqAccess2024REC')
 
@@ -125,15 +125,6 @@ def publishing_data():
         print("publishing on 'json_data'")
         print(json_payload)
         pub_client.publish("json_data", json_payload,qos=0)
-            # only want to publish new data
-            # while values:
-            #     if len(values) == 0:
-            #         value = 0
-            #     else:
-            #         value = values.pop(0) # remove first element
-            #         topic = f'{key}'
-            #         pub_client.publish(topic, value, qos = 0)
-            #         print(f'Published Data on topic: {topic}, val: {value:.04f}')
         time.sleep(2)
 
 if __name__ == "__main__":
