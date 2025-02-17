@@ -8,6 +8,11 @@
     - chmod 0700 /password_file
     - `mosquitto_passwd -U password_file`
 
+ -   username = "hivemquser" # admin  
+  password = "mqAccess2024REC"
+
+  hivemquser:mqAccess2024REC
+
 ## links
 - http://localhost:3000/login works
 ```sh

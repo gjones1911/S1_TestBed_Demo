@@ -17,7 +17,7 @@ services:
 
   # 🔄 Telegraf (MQTT → InfluxDB)
   telegraf:
-    image: telegraf:1.25  # Ensure version compatibility
+    image: telegraf:1.25  # Ensure version compatibility. was 1.25
     container_name: telegraf
     depends_on:
       - influxdb
