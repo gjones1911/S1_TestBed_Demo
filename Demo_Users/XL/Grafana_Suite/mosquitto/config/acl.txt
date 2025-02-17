@@ -6,6 +6,10 @@
 user admin
 topic readwrite #
 
+# 🔹 Allow full access to the admin user
+user hivemquser
+topic readwrite #
+
 # 🔹 Limited access for specific users
 user sensor_client
 topic read sensors/+

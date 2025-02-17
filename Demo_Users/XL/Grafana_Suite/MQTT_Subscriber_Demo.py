@@ -3,16 +3,18 @@ import time
 import uuid
 
 # Configuration
-MQTT_BROKER = "recoil.ise.utk.edu"
-MQTT_USER = "hivemquser"
-MQTT_PWD = "mqAccess2024REC"
-MQTT_PORT = 1883
+# MQTT_BROKER = "recoil.ise.utk.edu"
+# MQTT_USER = "hivemquser"
+# MQTT_PWD = "mqAccess2024REC"
+# MQTT_PORT = 1883
 MQTT_TOPIC = "json_data"
 
-# MQTT_BROKER = "localhost"
+MQTT_BROKER = "localhost"
+MQTT_USER = "hivemquser"
+MQTT_PWD = "mqAccess2024REC"
 # MQTT_USER = "admin"
 # MQTT_PWD = "secret!99"
-# MQTT_PORT = 1883
+MQTT_PORT = 1883
 # MQTT_TOPIC = "sensors/temperature"
 
 RUN_DURATION = 600  # in seconds

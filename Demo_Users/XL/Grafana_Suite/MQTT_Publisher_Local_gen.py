@@ -11,8 +11,10 @@ import uuid
 import json
 
 MQTT_BROKER = "localhost" # local mosquitto broker
-MQTT_USER = "admin"
-MQTT_PWD = "secret!99"
+# MQTT_USER = "admin"
+# MQTT_PWD = "secret!99"
+MQTT_USER = "hivemquser"
+MQTT_PWD = "mqAccess2024REC"
 MQTT_PORT = 1883
 MQTT_TOPIC = "sensors/temperature"
 
