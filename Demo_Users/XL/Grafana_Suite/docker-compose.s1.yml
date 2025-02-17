@@ -1,0 +1,76 @@
+# version: '3.8'
+
+services:
+  # 🚀 MQTT Broker (Mosquitto)
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: mosquitto
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    restart: always
+
+  # 🔄 Telegraf (MQTT → InfluxDB)
+  telegraf:
+    image: telegraf:1.25  # Ensure version compatibility
+    container_name: telegraf
+    depends_on:
+      - influxdb
+      - mosquitto
+    volumes:
+      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    restart: always
+
+  # 📊 InfluxDB (Time-Series DB) with Persistent Storage
+  influxdb:
+    image: influxdb:1.8
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb_data:/var/lib/influxdb  # Persistent Storage
+    environment:
+      - INFLUXDB_DB=vfluxdb
+      - INFLUXDB_USER=admin
+      - INFLUXDB_USER_PASSWORD=secrets4InfluxAdmin
+    restart: always
+
+  # 🎨 Grafana (Visualization)
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    depends_on:
+      - influxdb
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=SuperSecurePassword123!
+    volumes:
+      - grafana_data:/var/lib/grafana  # Persistent Storage
+      - ./grafana/config/grafana.ini:/etc/grafana/grafana.ini:ro  # Config file correctly mapped
+    restart: always
+
+  # 🛢 MySQL Database
+  mysql:
+    image: mysql:8.0
+    platform: linux/amd64
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: my_user
+      MYSQL_PASSWORD: my_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql  # Persistent Storage
+
+volumes:
+  influxdb_data:  # Persistent Volume for InfluxDB
+  grafana_data:   # Persistent Volume for Grafana
+  mysql_data:     # Persistent Volume for MySQL
