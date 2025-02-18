@@ -2,6 +2,7 @@ import pandas as pd
 from opcua import Client
 import time
 import paho.mqtt.client as mqtt
+import uuid
 
 import json
 import argparse
@@ -98,9 +99,18 @@ class SubHandler(object):
         print("Python: New event", event)
         
 # For MQTT Client creation (data publisher)
-mqttBroker = 'localhost' # 'recoil.ise.utk.edu'
-pub_client = mqtt.Client(client_id='S1 Publisher')
-pub_client.username_pw_set(username = 'hivemquser', password = 'mqAccess2024REC')
+
+MQTT_BROKER = "localhost" # local mosquitto broker, 
+MQTT_USER = "hivemquser"
+MQTT_PWD = "mqAccess2024REC"
+MQTT_PORT = 1883
+MQTT_TOPIC = "sensors/temperature"
+
+client_id = f'Pub_s1_{uuid.uuid4().hex[:8]}'
+
+pub_client = mqtt.Client(client_id=client_id)
+pub_client.username_pw_set(username = MQTT_USER, password = MQTT_PWD)
+
 
 def publishing_data():
     while True:
@@ -117,15 +127,17 @@ def publishing_data():
                 # value = values.pop(0) # remove first element
                 value = np.around(values[-1], 4) # get last added element
                 topic = f'{key}'
-                pub_client.publish(topic, value, qos = 0)
-                print(f'Gathered Data: {topic}, val: {value:.04f}')
+                pub_client.publish(f's1/{topic}', value, qos = 0)
+                print(f'Gathered Data: s1/{topic}, val: {value:.04f}')
+         
+        json_package['timestamp']  = time.strftime("%Y-%m-%dT%H:%M:%SZ") 
         
         json_payload = json.dumps(json_package)
         # attempt to publish new json payload
         print("publishing on 'json_data'")
         print(json_payload)
         pub_client.publish("json_data", json_payload,qos=0)
-        time.sleep(2)
+        time.sleep(1)
 
 if __name__ == "__main__":
     # connect with opcua client
@@ -136,7 +148,7 @@ if __name__ == "__main__":
         # Create a subscription
         subscription = client.create_subscription(500, SubHandler())  # 500 ms publishing interval
         
-        pub_client.connect(mqttBroker, keepalive = 1000)
+        pub_client.connect(MQTT_BROKER, keepalive = 1000)
         
         # Subscribe to a data change events for each node in the subs (set)
         #handle = subscription.subscribe_data_change(client.get_node("ns=4;s=6166f712-292e-403c-8b9f-0a093ffea11b")) 

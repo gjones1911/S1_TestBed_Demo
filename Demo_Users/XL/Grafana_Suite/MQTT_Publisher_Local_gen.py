@@ -20,7 +20,8 @@ MQTT_TOPIC = "sensors/temperature"
 
 try:
     client_id = f'Pub_xl_{uuid.uuid4().hex[:8]}'
-    client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id=client_id, clean_session=False)
+    # client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id=client_id, clean_session=False)
+    client = mqtt.Client(client_id=client_id, clean_session=False)
 
     ## with pwd
     client.username_pw_set(username=MQTT_USER,password=MQTT_PWD)
