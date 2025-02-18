@@ -19,6 +19,9 @@ client_id = f'Pub_s1_{uuid.uuid4().hex[:8]}'
 pub_client = mqtt.Client(client_id=client_id)
 pub_client.username_pw_set(username = MQTT_USER, password = MQTT_PWD)
 
+def convert_spaces_to_underscores(text: str) -> str:
+    return text.replace(" ", "_")
+
 def parse_args():
     # Create an argument parser
     parser = argparse.ArgumentParser(description="Script to run with a specified duration.")
@@ -119,7 +122,7 @@ def publishing_data():
                 value = 0
                 json_package[key] = 0
             else: 
-                topic = f'{key}'               
+                topic = convert_spaces_to_underscores(key)              
                 value = np.around(values[-1], 4) # get last added element
                 json_package[key] = value
                 
