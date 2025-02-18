@@ -9,7 +9,7 @@ import argparse
 import numpy as np
 
 # For MQTT Client creation (data publisher)
-MQTT_BROKER = "localhost" # local mosquitto broker, 
+MQTT_BROKER = "localhost" # local mosquitto broker, localhost
 MQTT_USER = "hivemquser"
 MQTT_PWD = "mqAccess2024REC"
 MQTT_PORT = 1883
