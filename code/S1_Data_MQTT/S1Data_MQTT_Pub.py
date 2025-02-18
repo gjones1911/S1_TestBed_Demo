@@ -8,6 +8,16 @@ import json
 import argparse
 import numpy as np
 
+# For MQTT Client creation (data publisher)
+MQTT_BROKER = "localhost" # local mosquitto broker, 
+MQTT_USER = "hivemquser"
+MQTT_PWD = "mqAccess2024REC"
+MQTT_PORT = 1883
+
+client_id = f'Pub_s1_{uuid.uuid4().hex[:8]}'
+
+pub_client = mqtt.Client(client_id=client_id)
+pub_client.username_pw_set(username = MQTT_USER, password = MQTT_PWD)
 
 def parse_args():
     # Create an argument parser
@@ -98,20 +108,6 @@ class SubHandler(object):
     def event_notification(self, event):
         print("Python: New event", event)
         
-# For MQTT Client creation (data publisher)
-
-MQTT_BROKER = "localhost" # local mosquitto broker, 
-MQTT_USER = "hivemquser"
-MQTT_PWD = "mqAccess2024REC"
-MQTT_PORT = 1883
-MQTT_TOPIC = "sensors/temperature"
-
-client_id = f'Pub_s1_{uuid.uuid4().hex[:8]}'
-
-pub_client = mqtt.Client(client_id=client_id)
-pub_client.username_pw_set(username = MQTT_USER, password = MQTT_PWD)
-
-
 def publishing_data():
     while True:
         print(f"Data-->: {data}")
@@ -122,13 +118,18 @@ def publishing_data():
             if len(values) == 0:
                 value = 0
                 json_package[key] = 0
-            else:
-                json_package[key] = np.around(values[-1], 4)
-                # value = values.pop(0) # remove first element
+            else: 
+                topic = f'{key}'               
                 value = np.around(values[-1], 4) # get last added element
-                topic = f'{key}'
-                pub_client.publish(f's1/{topic}', value, qos = 0)
-                print(f'Gathered Data: s1/{topic}, val: {value:.04f}')
+                json_package[key] = value
+                
+                payload = json.dumps({
+                    topic: value,
+                    "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ")  # ISO 8601 UTC format
+                })
+                
+                pub_client.publish(f's1/{topic}', payload)
+                print(f'publishing on: s1/{topic}, val: {value:.04f}')
          
         json_package['timestamp']  = time.strftime("%Y-%m-%dT%H:%M:%SZ") 
         
@@ -136,7 +137,7 @@ def publishing_data():
         # attempt to publish new json payload
         print("publishing on 'json_data'")
         print(json_payload)
-        pub_client.publish("json_data", json_payload,qos=0)
+        pub_client.publish("json_data", json_payload)
         time.sleep(1)
 
 if __name__ == "__main__":
@@ -148,7 +149,8 @@ if __name__ == "__main__":
         # Create a subscription
         subscription = client.create_subscription(500, SubHandler())  # 500 ms publishing interval
         
-        pub_client.connect(MQTT_BROKER, keepalive = 1000)
+        # pub_client.connect(MQTT_BROKER, keepalive = 1000)
+        pub_client.connect(MQTT_BROKER)
         
         # Subscribe to a data change events for each node in the subs (set)
         #handle = subscription.subscribe_data_change(client.get_node("ns=4;s=6166f712-292e-403c-8b9f-0a093ffea11b")) 
