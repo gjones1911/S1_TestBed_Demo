@@ -16,7 +16,7 @@ MQTT_BROKER = "localhost" # local mosquitto broker
 MQTT_USER = "hivemquser"
 MQTT_PWD = "mqAccess2024REC"
 MQTT_PORT = 1883
-MQTT_TOPIC = "sensors/temperature"
+# MQTT_TOPIC = "sensors/temperature"
 
 try:
     client_id = f'Pub_xl_{uuid.uuid4().hex[:8]}'
