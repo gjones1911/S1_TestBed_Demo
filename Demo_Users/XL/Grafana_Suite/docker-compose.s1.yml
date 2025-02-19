@@ -12,11 +12,12 @@ services:
       - ./mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
       - ./mosquitto/data:/mosquitto/data
       - ./mosquitto/log:/mosquitto/log
+      - ./mosquitto/config/password_file:/mosquitto/config/password_file
     restart: always
 
   # 🔄 Telegraf (MQTT → InfluxDB)
   telegraf:
-    image: telegraf:1.25  # Ensure version compatibility
+    image: telegraf:1.25  # Ensure version compatibility. was 1.25
     container_name: telegraf
     depends_on:
       - influxdb
@@ -61,10 +62,10 @@ services:
     container_name: mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: my_database
-      MYSQL_USER: my_user
-      MYSQL_PASSWORD: my_password
+      MYSQL_ROOT_PASSWORD: ViridianMySQL2025Root
+      MYSQL_DATABASE: viridianmydb
+      MYSQL_USER: viridian_db_user
+      MYSQL_PASSWORD: viridian_db_user_2025_Pass
     ports:
       - "3306:3306"
     volumes:
