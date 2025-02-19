@@ -32,12 +32,12 @@ try:
         # Create a JSON message
         # Include timestamp in ISO 8601 format
         payload = json.dumps({
-            "RMS": randNumber,
+            "rms": randNumber,
             "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ")  # ISO 8601 UTC format
         })
 
         # Publish as a JSON object
-        client.publish("s1/RMS", payload)
+        client.publish("sensors/rms", payload)
 
         print(f"Just published {randNumber} to Topic s1/RMS")
         time.sleep(1)
