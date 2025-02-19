@@ -31,14 +31,14 @@ try:
         # Create a JSON message
         # Include timestamp in ISO 8601 format
         payload = json.dumps({
-            "humidity": randNumber,
+            "temperature": randNumber,
             "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ")  # ISO 8601 UTC format
         })
 
         # Publish as a JSON object
-        client.publish("sensors/humidity", payload)
+        client.publish(MQTT_TOPIC, payload)
 
-        print(f"Just published {randNumber} to Topic sensors/humidity")
+        print(f"Just published {randNumber} to Topic sensors/temperature")
         time.sleep(1)
 except Exception as e:
     print(f"An error occurred: {e}")

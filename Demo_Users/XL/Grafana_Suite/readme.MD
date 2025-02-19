@@ -8,10 +8,16 @@
     - chmod 0700 /password_file
     - `mosquitto_passwd -U password_file`
 
+<<<<<<< HEAD
  -   username = "hivemquser" # admin  
   password = "mqAccess2024REC"
 
   hivemquser:mqAccess2024REC
+=======
+- docker-compose.s1.yml 
+    - for viz on the s1 testbed computer
+    - Grafana suite
+>>>>>>> 14f606dedc894313150b8dda3efb7beb8eed2cb7
 
 ## links
 - http://localhost:3000/login works
