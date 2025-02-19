@@ -37,7 +37,7 @@ try:
         })
 
         # Publish as a JSON object
-        client.publish("sensors/rms", payload)
+        client.publish("s1/rms", payload)
 
         print(f"Just published {randNumber} to Topic s1/RMS")
         time.sleep(1)
