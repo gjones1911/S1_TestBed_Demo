@@ -9,3 +9,4 @@ tensorflow==2.16.1
 tf-keras==2.16.0
 transformers==4.44.0
 opcua==0.98.13
+gradio==4.44.1

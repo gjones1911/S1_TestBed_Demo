@@ -124,24 +124,14 @@ def publishing_data():
             else: 
                 topic = convert_spaces_to_underscores(key)              
                 value = np.around(values[-1], 4) # get last added element
-                json_package[key] = value
-                
-                payload = json.dumps({
-                    topic: value,
-                    "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ")  # ISO 8601 UTC format
-                })
-                
-                pub_client.publish(f's1/{topic}', payload)
-                print(f'publishing on: s1/{topic}, val: {value:.04f}')
-         
+                json_package[topic] = value
+                       
         json_package['timestamp']  = time.strftime("%Y-%m-%dT%H:%M:%SZ") 
         
         json_payload = json.dumps(json_package)
-        # attempt to publish new json payload
-        print("publishing on 'json_data'")
-        print(json_payload)
-        pub_client.publish("json_data", json_payload)
-        time.sleep(1)
+        print(f"publishing on 'json_data': {json_payload}")
+        pub_client.publish("s1/json_data", json_payload)
+        time.sleep(2)
 
 if __name__ == "__main__":
     # connect with opcua client
