@@ -55,10 +55,21 @@ def cleanup_and_exit(signum, frame):
     os._exit(0)  # Force exit without lingering processes
 
 # Register signal handlers for graceful shutdown
-signal.signal(signal.SIGINT, cleanup_and_exit)
-signal.signal(signal.SIGTERM, cleanup_and_exit)
-signal.signal(signal.SIGTSTP, cleanup_and_exit)
+try:
+    signal.signal(signal.SIGINT, cleanup_and_exit)
+except Exception as ex:
+    print(ex)
 
+try:
+    signal.signal(signal.SIGTERM, cleanup_and_exit)
+except Exception as ex:
+    print(ex)
+    
+    
+try:
+    signal.signal(signal.SIGTSTP, cleanup_and_exit)
+except Exception as ex:
+    print(ex)
 
 # Define UI for controlling the shell script and viewing logs
 def create_ui(program_name, log_file, script_path):

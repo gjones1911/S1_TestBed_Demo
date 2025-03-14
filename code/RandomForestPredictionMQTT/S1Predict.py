@@ -15,7 +15,8 @@ MQTT_BROKER = 'localhost' # recoil.ise.utk.edu
 # MQTT Username/Pwd
 MQTT_USER = 'hivemquser'
 MQTT_PWD = 'mqAccess2024REC'
-
+MQTT_TOPIC_SUB = "s1/json_data"
+MQTT_TOPIC_PUB = "s1/prediction"
 def parse_args():
     # Create an argument parser
     parser = argparse.ArgumentParser(description="Script to run with a specified duration.")
@@ -90,6 +91,7 @@ extra_topic = ["json_data"]
 
 S1_topics += extra_topic
 S1_topics = ["json_data"]
+S1_topics = [MQTT_TOPIC_SUB]
 curdir = os.getcwd()
 print("current directory:\n", curdir)
 
@@ -125,7 +127,7 @@ def model_predict(messages, motor):
             prediction = '2'
         print(f'Prediction for {motor}: ', prediction[0])
         client.publish(f'{motor}/prediction', str(prediction[0]), qos = 2)
-        client.publish('prediction', str(prediction[0]), qos = 2)
+        client.publish(MQTT_TOPIC_PUB, str(prediction[0]), qos = 2)
     except Exception as ex:
         print(f"Error with model predict:\nMotor: {motor}\n:exception: {ex}\n---------------------\n\n")
     

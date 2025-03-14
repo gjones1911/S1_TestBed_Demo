@@ -38,9 +38,9 @@ mqtt_instructor = InstructorMqttClient(
 )
 tend = time.time() - tstart
 
-print(f"Instructor model loading complete at {tend:.2f} seconds. setting flag")
+print(f"Instructor model loading complete at {tend:.2f} seconds. setting flag", flush=True)
 check_flag_file(flag_file)
-print(f"Flag file {flag_file} has been created...")
+print(f"Flag file {flag_file} has been created...", flush=True)
 
 
 
@@ -51,5 +51,5 @@ if __name__ == "__main__":
     # on the default or command line 
     # indicated duration
     duration = parse_args()
-    print(f"\n\nDuration: {duration}\n\n")
+    print(f"\n\nDuration: {duration}\n\n", flush=True)
     mqtt_instructor.run_mqtt_s1_instructor(client_name=CLIENT_ID, demo_time_out=duration, try_limit=10)

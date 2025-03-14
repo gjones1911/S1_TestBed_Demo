@@ -1,0 +1,3 @@
+C:\GitHub\S1_TestBed_Demo\code\S1_Data_MQTT\S1Data_MQTT_Pub.py:19: DeprecationWarning: Callback API version 1 is deprecated, update to latest version
+  pub_client = mqtt.Client(client_id=client_id)
+Requested session timeout to be 3600000ms, got 600000ms instead

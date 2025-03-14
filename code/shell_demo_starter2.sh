@@ -15,25 +15,12 @@ echo "Script started at $(date)"
 echo "Running as PID $$"
 PIDFILE="./tmp/s1_demo_starter.pid"
 
+# Ensure the tmp directory exists
+mkdir -p ./tmp
+
 echo $$ > $PIDFILE
 echo "PID file written successfully at ./tmp/s1_demo_starter.pid"
 echo "PID file written successfully at $PIDFILE"
-
-# # Debugging: Check if the script has proper permissions
-# if [ ! -w /tmp ]; then
-#     echo "ERROR: No write permission to /tmp!" | tee -a $LOGFILE
-#     exit 1
-# fi
-
-# echo $$ > /tmp/s1_demo_starter.pid  # Store PID in a file
-
-# exec > ./logs/startup.log 2>&1
-
-
-
-# source ../venvs/s1demovenv/Scripts/activate   # activate the environment
-
-
 
 DataPublisherLOG="./logs/s1_data_mqtt_pub.log"
 PredictionPublisherLOG="./logs/s1_prediction_starter.log"
@@ -61,7 +48,6 @@ else
    echo "File $InstructionPublisherLOG does not exist."
 fi
 
-
 if [ -f $FlagFile ]; then
    echo "File $FlagFile exists.";
    rm $FlagFile;
@@ -69,9 +55,8 @@ else
    echo "File $FlagFile does not exist.";
 fi
 
-# trap 'rm -f $DataPublisherLOG $PredictionPublisherLOG $InstructionPublisherLOG $FlagFile;'  SIGINT
 # Fix: Trap SIGINT to properly kill background processes
-trap 'echo "Stopping script..."; for pid in "${PIDS[@]}"; do kill -TERM $pid 2>/dev/null; done;' SIGINT
+trap 'echo "Stopping script..."; for pid in "${PIDS[@]}"; do kill -TERM $pid 2>/dev/null; done; exit 0' SIGINT
 
 # Fix: Wait for background processes properly
 PIDS=()   # create list of created process IDs
@@ -96,23 +81,9 @@ python -u "./S1_Data_MQTT/S1Data_MQTT_Pub.py" --duration "$DURATION" > "./logs/s
 STREAMER_PID=$!
 PIDS+=($STREAMER_PID)
 echo "data publisher started"
-# wait  # wait for background processes to start
-
 
 # Cleanup logs at the end
 wait "${PIDS[@]}"
 echo "All background processes have finished."
 rm -f "$DataPublisherLOG" "$PredictionPublisherLOG" "$InstructionPublisherLOG" "$FlagFile" "$PIDFILE"
 echo "All scripts have finished running for duration: $DURATION seconds."
-# Trap SIGINT (Ctrl+C) to remove logs when stopping the script
-# Trap SIGINT (Ctrl+C) to remove logs when stopping the script
-
-# trap 'rm -f $DataPublisherLOG $PredictionPublisherLOG $InstructionPublisherLOG $FlagFile; exit' SIGINT
-# rm $DataPublisherLOG
-# rm $PredictionPublisherLOG
-# rm $InstructionPublisherLOG
-
-# echo "All scripts have finished running for duration: $DURATION seconds."
-
-# Deactivate the virtual environment (optional)
-# deactivate

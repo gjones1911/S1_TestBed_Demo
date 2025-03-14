@@ -53,7 +53,8 @@ MQTT_BROKER = "localhost" #"recoil.ise.utk.edu"
 MQTT_USER = "hivemquser"
 MQTT_PWD = "mqAccess2024REC"
 
-
+MQTT_TOPIC_SUB = "s1/prediction"
+MQTT_TOPIC_PUB = "s1/instructions"
 ## keep track of when a new status appears to cut down on 
 ## how often we have to get a new query from the bot
 status = ""
@@ -63,9 +64,10 @@ topic = 'motor_state'
 
 # prediction we need to get to send which instruction set to generate
 subscription_topic = 'prediction'
-
+subscription_topic = MQTT_TOPIC_SUB
 # topic we need to publish to so the DT can see the instructions
 publish_topic = 'instructions'
+publish_topic = MQTT_TOPIC_PUB
 
 # should be path to folder, if it is in this dir you can just use this
 Model_Name = r"S1_MotorMaintenaceInstructor"
@@ -90,20 +92,20 @@ def set_up_hf_login(HF_Token_json, add_git_cred=True):
     if read_token:
         # api_hf.set_access_token(read_token)
         login(token=read_token, add_to_git_credential=add_git_cred)
-        print("successful read token setup")
+        print("successful read token setup", flush=True)
     else:
-        print("Some issue with read token for HF")
+        print("Some issue with read token for HF", flush=True)
     
     if write_token:
         # api_hf.set_access_token(write_token)
         login(token=read_token, add_to_git_credential=add_git_cred)
-        print("successful write token setup")
+        print("successful write token setup", flush=True)
     else:
-        print("Some issue with write token for HF")
+        print("Some issue with write token for HF", flush=True)
 
 curdir = os.getcwd()
 default_model_path = curdir + "/code/s1_mqtt_instructor/" + Model_Name if curdir.endswith("S1_TestBed_Demo") else "./" + Model_Name
-print(f"default_model_path: {default_model_path}\n------------\n\n")
+print(f"default_model_path: {default_model_path}\n------------\n\n", flush=True)
 
 class InstructorMqttClient:
     """ Create object that loads an LLM and will generate instructions 
@@ -126,7 +128,7 @@ class InstructorMqttClient:
         if assistant:
             self.instruction_assistant= assistant
         elif assistant_path:
-            print(f"loading model from path: {assistant_path}")
+            print(f"loading model from path: {assistant_path}", flush=True)
             self.instruction_assistant= InstructorBot(bot_path=assistant_path, name='Instructor')
         else:
             raise ValueError(f"One of 'instruction_assistant' in the form of an 'InstructorBot' or 'instruction_assistant_path' in the form of a path to a local or HF style LLM must be passed when creating the 'InstructorMqttClient', ending program")
@@ -137,17 +139,17 @@ class InstructorMqttClient:
         """
             Method used to connect to and subscribe to the needed topics on the MQTT connection
         """
-        print("Connected flags ",str(flags),"result code ",str(rcode))
+        print("Connected flags ",str(flags),"result code ",str(rcode), flush=True)
         if (rcode != 0): # handle error
-            print("MQTT auth failed")
+            print("MQTT auth failed", flush=True)
             os._exit(1) # works - hard exit
         else:
             # if connection was successful subscribe to the "prediction" channel
-            print("Connection successful!")
+            print("Connection successful!", flush=True)
             service_str = self.subscription_topic
             client.subscribe(service_str) 
-            print(f"\n\n\tSubscribed to: {service_str}")
-            print(f"\n\n\tPublishing to: {self.publish_topic}\n\n\n")
+            print(f"\n\n\tSubscribed to: {service_str}", flush=True)
+            print(f"\n\n\tPublishing to: {self.publish_topic}\n\n\n", flush=True)
             return
 
 
@@ -186,8 +188,8 @@ class InstructorMqttClient:
             if status != userdata['previous']:
                 # old_status = status
                 userdata['previous'] = status
-                print("new status received: ", status)
-                print("Please wait for the response...")
+                print("new status received: ", status, flush=True)
+                print("Please wait for the response...", flush=True)
                 response, prompt = self.instruction_assistant.respond_to_task_query(status, rng=False, selection=1, ret_prompt=True)
                 
                 # Logic used to strip excess new lines from instructions
@@ -197,17 +199,17 @@ class InstructorMqttClient:
                 if "\n\n\n" in response:
                     responseL = response.split("\n\n\n")
                     response = responseL[0] + response[1]
-                print("Response:\n", response)
+                print("Response:\n", response, flush=True)
                 userdata["response"] = response
                 time.sleep(PUBLISH_DELAY)
             else:
-                print("No new status received....")
-                print("Response:\n", response)
+                print("No new status received....", flush=True)
+                print("Response:\n", response, flush=True)
                 time.sleep(PUBLISH_DELAY)
-            print(f"Publishing to {self.publish_topic}")
+            print(f"Publishing to {self.publish_topic}", flush=True)
             client.publish(self.publish_topic, response.encode('utf-8'), qos=2)
         except Exception as ex:
-            print(f"ex: {ex}")
+            print(f"ex: {ex}", flush=True)
 
 
     def create_client(self, client_name=CLIENT_ID, username=MQTT_USER, pwd=MQTT_PWD,
@@ -238,20 +240,20 @@ class InstructorMqttClient:
         """
         connected = False
         trys = 0
-        print(f"Set to run for {demo_time_out} seconds...")
+        print(f"Set to run for {demo_time_out} seconds...", flush=True)
         while trys < try_limit:
             try:
                 CLIENT_MOD = str(os.getpid())
                 CLIENT_NAME = client_name + f"_{CLIENT_MOD}"
-                print(f"\n\nRunning with client name: {CLIENT_NAME}...\n\n")
+                print(f"\n\nRunning with client name: {CLIENT_NAME}...\n\n", flush=True)
                 client = self.create_client(client_name=CLIENT_NAME, )
                 # client.connect(MQTT_BROKER, MQTT_PORT, MQTT_KEEPALIVE)
                 connected = True
                 trys = try_limit+1
             except Exception as ex:
-                print(f"Issue creating MQTT client:\n{ex}")
+                print(f"Issue creating MQTT client:\n{ex}", flush=True)
                 trys += 1
-                print(f"Attempting for a {trys+1} try of {try_limit} potential trys.")
+                print(f"Attempting for a {trys+1} try of {try_limit} potential trys.", flush=True)
                 connected = False
         if connected:
             client.loop_start()
@@ -259,8 +261,8 @@ class InstructorMqttClient:
             client.loop_stop()
         else:
             if trys >= try_limit:
-                print("The try limit was reached...")
-                print("Please check the code and or arguments and try again...")
+                print("The try limit was reached...", flush=True)
+                print("Please check the code and or arguments and try again...", flush=True)
 
 
 class PredictorMqttClient(InstructorMqttClient):
@@ -284,17 +286,17 @@ class PredictorMqttClient(InstructorMqttClient):
         """
             Method used to connect to and subscribe to the needed topics on the MQTT connection
         """
-        print("Connected flags ",str(flags),"result code ",str(rcode))
+        print("Connected flags ",str(flags),"result code ",str(rcode), flush=True)
         if (rcode != 0): # handle error
-            print("MQTT auth failed")
+            print("MQTT auth failed", flush=True)
             os._exit(1) # works - hard exit
         else:
             # if connection was successful subscribe to the "prediction" channel
-            print("Connection successful!")
+            print("Connection successful!", flush=True)
             service_str = self.subscription_topic
             client.subscribe(service_str) 
-            print(f"\n\n\tSubscribed to: {service_str}")
-            print(f"\n\n\tPublishing to: {self.publish_topic}\n\n\n")
+            print(f"\n\n\tSubscribed to: {service_str}", flush=True)
+            print(f"\n\n\tPublishing to: {self.publish_topic}\n\n\n", flush=True)
             return
 
     def run_predictions_loop(self, interval_sec=10, topic="prediction", 
@@ -308,14 +310,14 @@ class PredictorMqttClient(InstructorMqttClient):
             try:
                 CLIENT_MOD = str(random.randint(1, 10))
                 CLIENT_NAME = self.client_name + f"_{CLIENT_MOD}"
-                print(f"\n\nRunning with client name: {CLIENT_NAME}...\n\n")
+                print(f"\n\nRunning with client name: {CLIENT_NAME}...\n\n", flush=True)
                 client = self.create_client(client_name=CLIENT_NAME, )
                 connected = True
                 trys = try_limit+1
             except Exception as ex:
-                print(f"Issue creating MQTT client:\n{ex}")
+                print(f"Issue creating MQTT client:\n{ex}", flush=True)
                 trys += 1
-                print(f"Attempting for a {trys+1} try of {try_limit} potential trys.")
+                print(f"Attempting for a {trys+1} try of {try_limit} potential trys.", flush=True)
                 connected = False
         if connected:
             time_left = True
@@ -324,10 +326,10 @@ class PredictorMqttClient(InstructorMqttClient):
                 # send a prediction and wait...
                 prediction = 2
                 prediction = 3
-                print(f"Sending Prediction: {prediction}")
+                print(f"Sending Prediction: {prediction}", flush=True)
                 client.publish(topic, prediction, qos=2)
                 time.sleep(interval_sec)
                 time_spent = time.time() - ts
                 time_left = time_spent < duration
         else:
-            print("Issue with connection!!!!!!!")
+            print("Issue with connection!!!!!!!", flush=True)
