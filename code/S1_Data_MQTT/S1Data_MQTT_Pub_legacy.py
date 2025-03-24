@@ -111,21 +111,28 @@ def publishing_data():
             
             # while values:
             if len(values) == 0:
+                print()
                 value = 0
                 json_package[key] = 0
             else:
                 json_package[key] = np.around(values[-1], 4)
                 # value = values.pop(0) # remove first element
-                value = np.around(values[-1], 4) # get last added element
-                topic = f'{key}'
-                # pub_client.publish(topic, value, qos = 0)   # old code for multi-channel publishing
-                # print(f'Published Data on topic: {topic}, val: {value:.04f}')
-        
+                try:
+                    print(values)
+                    value = np.around(values[-1], 4) # get last added element
+                    topic = f'{key}'
+                    
+                    pub_client.publish(topic, value, qos = 0)   # old code for multi-channel publishing
+                    print(f'Published Data on topic: {topic}, val: {value:.04f}')
+            
+                    
+                except Exception as ex:
+                    print(ex)
         json_payload = json.dumps(json_package)
         # attempt to publish new json payload
         print(f"publishing on 'json_data'\n{json_payload}\n------------------------------\n\n")
         print(json_payload)
-        
+    
         pub_client.publish("json_data", json_payload,qos=0)
         time.sleep(2)
 

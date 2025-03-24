@@ -51,5 +51,6 @@ if __name__ == "__main__":
     # on the default or command line 
     # indicated duration
     duration = parse_args()
+    duration = 40000
     print(f"\n\nDuration: {duration}\n\n")
     mqtt_instructor.run_mqtt_s1_instructor(client_name=CLIENT_ID, demo_time_out=duration, try_limit=10)

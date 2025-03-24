@@ -49,8 +49,20 @@ def generate_motor_topics(motor_number):
     return topics
 
 # expected order
-og = ['ch1_bias', 'ch1_derivedPk', 'ch1_directRMS', 'ch1_direct', 'ch1_velocityRMS', 'ch1_velocityPk', 
-    'ch2_bias', 'ch2_derivedPk', 'ch2_directRMS', 'ch2_direct', 'ch2_velocityRMS', 'ch2_velocityPk']
+og =  ['ch1_bias', 'ch1_derivedPk', 'ch1_directRMS', 'ch1_direct', 'ch1_velocityRMS', 'ch1_velocityPk', 
+       'ch2_bias', 'ch2_derivedPk', 'ch2_directRMS', 'ch2_direct', 'ch2_velocityRMS', 'ch2_velocityPk']
+
+ooog= ['ch1_bias', 'ch1_derivedPk', 'ch1_direct', 'ch1_directRMS', 'ch1_velocityPk', 'ch1_velocityRMS', 
+       'ch2_bias', 'ch2_derivedPk', 'ch2_direct', 'ch2_directRMS', 'ch2_velocityPk', 'ch2_velocityRMS', 
+       'volts']
+
+og2 = ['Channel_1_Bias', 'Channel_1_Derived_Pk', 'Channel_1_Direct', 'Channel_1_Direct_RMS',  'Channel_1_Velocity_Pk', 'Channel_1_Velocity_RMS',  
+       'Channel_2_Bias', 'Channel_2_Derived_Pk', 'Channel_2_Direct', 'Channel_2_Direct_RMS',  'Channel_2_Velocity_Pk', 'Channel_2_Velocity_RMS',
+       "Volts"]  
+
+
+renamed = {long: short for long, short in zip(og2, ooog)}
+print(f"Renamed: {renamed}")
 
 
 # order expected by RF model 
@@ -67,11 +79,11 @@ Motor2_topics = generate_motor_topics(2)
 Motor3_topics = generate_motor_topics(3)
 
 
-print(Motor1_topics)
-print(Motor2_topics)
-print(Motor3_topics)
+# print(Motor1_topics)
+# print(Motor2_topics)
+# print(Motor3_topics)
 
-# Topics to suscribe to
+# Topics to subscribe to
 S1_topics = ['Channel 1 Bias',
             'Channel 1 DerivedPk',
             'Channel 1 DirectRMS',
@@ -86,17 +98,20 @@ S1_topics = ['Channel 1 Bias',
             'Channel 2 VelocityRMS', 
             ]
 
-extra_topic = ["json_data"]
+extra_topic = ["s1/json_data"]
 
 S1_topics += extra_topic
-S1_topics = ["json_data"]
+S1_topics = ["s1/json_data"]   # changed to just listen for json data
 curdir = os.getcwd()
 print("current directory:\n", curdir)
 
 # Loading random forest model
 # replace with path to model trained & pickled locally (S1 Server)
+
 model_path = f'{curdir}/RandomForestPredictionMQTT/model/rf_joblib.z'
 model_path = f'{curdir}/RandomForestModel/rf_model/rf_joblib.pk'
+model_path = f'{curdir}/RandomForestModel/rf_model/rf02222025_joblib.pk'
+model_path = f'{curdir}/RandomForestModel/rf_model/rf02242025_joblib.pk'
 with open (model_path, 'rb') as f:
     rf = joblib.load(f)
 
@@ -110,22 +125,28 @@ messages = {
     'Motor3': {topic: None for topic in Motor3_topics},
     'S1': {topic: None for topic in S1_topics}
 }
+messages = {
+    'S1': {topic: None for topic in S1_topics}
+}
 print(f"here:{messages}")
 # Global variable for start time
 start_time  = time.time()
-
+global last_prediction 
+last_prediction = None
 def model_predict(messages, motor):
     try:
         print(f"messages: {messages}")
-        df = pd.DataFrame([messages])
+        df = pd.DataFrame(messages)[og2]
+        
         print(f"\n\n\n\t\tOG--->df:\n{df}\n")
         prediction = rf.predict(df)
+        print(f"\t\tOG prediction: {prediction}")
         if prediction[0] == 9:
             print("\n\n\n\t\tAdjustment aws made!!!!")
             prediction = '2'
         print(f'Prediction for {motor}: ', prediction[0])
-        client.publish(f'{motor}/prediction', str(prediction[0]), qos = 2)
-        client.publish('prediction', str(prediction[0]), qos = 2)
+        # client.publish(f'{motor}/prediction', str(prediction[0]), qos = 2)
+        client.publish('s1/prediction', str(prediction[0]), qos = 2)
     except Exception as ex:
         print(f"Error with model predict:\nMotor: {motor}\n:exception: {ex}\n---------------------\n\n")
     
@@ -134,44 +155,59 @@ def on_message(client, userdata, message):
     # global start_time
 
     topic = message.topic
+    print(f"Topic: {topic} v {extra_topic[0]}")
     if topic != extra_topic[0]:
+        print(f"\n\n\n\t\t\tHoller!!\n\n")
         payload = message.payload.decode('utf-8')
         if topic in S1_topics:
             motor = 'S1'
+            messages[motor][topic] = payload
         else:
             motor = topic.split('/')[0]
             messages[motor][topic] = payload
-        if topic == "json_data":
+        if topic == "s1/json_data":
             print(f"topic: {topic}")
-            print('Received message: ', message.topic, str(payload))
+            print('Received message: ', message.topic)
         else:
             print(f"other data:---{topic}")
     
         # setting the predictions to every 10 seconds, after the start of receiving a message.
         global start_time
+        
         if time.time() - start_time >= 10:
-            print(f"topic: {message.topic}")
+            print(f"topic: {message.topic}, motor: {motor}")
             for motor in messages:
-                model_predict(messages[motor], motor)
+                model_predict(messages[motor][topic], motor)
             start_time = time.time()
         else:
             print(f"next prediction in {abs(time.time() - start_time-10):.2f} seconds")
-    else:
+    else:   # used for S1 demo
         try:
             data = json.loads(message.payload.decode('utf-8'))
             print(f'json-data: {data}')
             # pull the data into a dataframe, drop unneeded column and reorder columns as needed
-            df = pd.DataFrame(data, index=[0]).drop(columns=['Volts'])[desired_order]
-            # print(f"columns: {df.columns}")
-            # print(f"df:\n{df}\n")
+            # df = pd.DataFrame(data, index=[0]).drop(columns=['Volts'])[og2]
+            df = pd.DataFrame(data, index=[0])[og2]
+            df = df.rename(columns=renamed)
+            print(f"columns: {df.columns}")
+            print(f"df:\n{df}\n")
             
             prediction = str(rf.predict(df)[0])
-            print(f"og-prediction: {prediction}")
-            if prediction == "9":
-                print("Adjusting value to 2")
-                prediction = "2"
+            # prediction = "1"
+            # print(f"og-prediction: {prediction}")
+            # if prediction == "9":
+            #     print("Adjusting value to 2")
+            #     prediction = "2"
+            global last_prediction
             print(f"prediction: {prediction}")
-            client.publish('prediction', str(prediction[0]), qos = 2)
+            # if prediction != last_prediction:
+            if True:
+                last_prediction = prediction
+                print("New prediction is found an published to prediction and s1/prediction!!!")
+                client.publish('s1/prediction', str(prediction), qos = 2)
+                client.publish('prediction', str(prediction), qos = 2)
+            else:
+                print("No new prediction")
         except Exception as ex:
             print(f"22ex:{ex}")
             
@@ -201,7 +237,7 @@ def on_connect(client, userdata, flags, rc, properties):
 ##########################################################
 # client creation
 mqttBroker = MQTT_BROKER
-print("makeing client")
+print("making client")
 client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id=f'S1RandomForestClientab_{pid}', clean_session=True)
 # client = mqtt.Client(client_id='S1RandomForestClient')
 ## with pwd
@@ -212,6 +248,8 @@ MQTT_PORT = 1883
 MQTT_KEEPALIVE = 6000
 MQTT_KEEPALIVE = 60
 client.connect(mqttBroker, MQTT_PORT, MQTT_KEEPALIVE)
+client.publish('s1/prediction',"", ) # clear old messages
+client.publish('prediction',"", ) # clear old messages
 # client.connect(mqttBroker)
 # Global flag to track running state
 running = True
@@ -262,7 +300,7 @@ start_time = time.time()
 
 
 print(messages)
-print("Sleeping until...")
+print(f"Sleeping until...{duration}")
 # How long the whole program runs
 # time.sleep(duration)
 

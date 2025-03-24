@@ -63,7 +63,7 @@ topic = 'motor_state'
 
 # prediction we need to get to send which instruction set to generate
 subscription_topic = 'prediction'
-
+subscription_topic = 's1/prediction'
 # topic we need to publish to so the DT can see the instructions
 publish_topic = 'instructions'
 
@@ -151,6 +151,8 @@ class InstructorMqttClient:
             return
 
 
+    def clear_topic(self, topic_to_clear):
+        pass
 
     # callback upon message
     def on_message(self, client, userdata, message):
@@ -219,6 +221,7 @@ class InstructorMqttClient:
         client.on_message=self.on_message 
         client.on_connect = self.on_connect
         client.connect(mqtt_broker, mqtt_port, mqtt_keepalive)
+        
         return client
 
     # set up and start the client

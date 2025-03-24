@@ -4,24 +4,23 @@ import os
 import numpy as np
 import pandas as pd
 # import scikitplot as skplt
-# import pickle
+import pickle
 from sklearn.model_selection import train_test_split
 from sklearn.utils import resample
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import LocalOutlierFactor
+from sklearn.preprocessing import LabelEncoder
+from sklearn.ensemble import RandomForestClassifier
 
 
 from sklearn import tree
 from sklearn import metrics
 from sklearn.metrics import f1_score, cohen_kappa_score, confusion_matrix, accuracy_score, classification_report, multilabel_confusion_matrix
 
-from everywhereml.sklearn.ensemble import RandomForestClassifier
-from everywhereml.code_generators.GeneratesCode import GeneratesCode as ml
-from everywhereml.code_generators.jinja.Jinja import Jinja
-from everywhereml.code_generators.prettifiers.basic_python_prettifier import basic_python_prettify
 
 #import matplotlib.pyplot as plt
 #import seaborn as sns
+
 curdir = os.getcwd()
 RNDSEED = np.random.seed(0)
 # !! Double-check path
@@ -29,7 +28,10 @@ RNDSEED = np.random.seed(0)
 # C:\Users\iLab\GIT_REPOS\SAFE\S1_TestBed_Demo\S1_TestBed_Demo\code\RandomForestModel
 # C:\Users\iLab\GIT_REPOS\SAFE\S1_TestBed_Demo\S1_TestBed_Demo\data
 # C:\Users\iLab\GIT_REPOS\SAFE\S1_TestBed_Demo\S1_TestBed_Demo\data\ALL_S1_DATA_INT.csv
-data_path = r'./data/ALL_S1_DATA_INT.csv'
+data_path = r'../../data/ALL_S1_DATA_INT.csv'
+data_path = r"../../data/merged_sensor_data_2025_b.csv"
+data_path = r"C:\Users\iLab\GIT_REPOS\SAFE\S1_TestBed_Demo\S1_TestBed_Demo\data\CombinedFaults_02222025.csv"
+
 print(f"Curdir: {curdir}")
 print(f"Checking at: {data_path}")
 df = pd.read_csv(data_path, low_memory=False)
@@ -38,18 +40,28 @@ print(df.columns)
 # Dropping the timestamp column
 df = df[df.columns.drop(list(df.filter(regex = 'timestamp')))]
 df = df[df.columns.drop(list(df.filter(regex = 'Unnamed: 0')))]
+try:
+    df.drop(labels=["Epoch_Seconds"], axis=1, inplace=True)
+except Exception as ex:
+    print(ex)
 # Dropping NaN
 df = df.dropna(how = 'any')
-print(df.columns)
+print(f"columns: ", df.columns)
 # Done to correct python creating an object type by accident since int was never declared when value was swapped
-
+print(df[['status']].describe())
 # Setting independent and dependent variables
 y = df['status']
 x = df.drop('status',axis = 1)
 
 # Train test split
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2, random_state = RNDSEED)
-
+print(x_test)
+print(x_train)
+print(y_test)
+print(y_train)
+le = LabelEncoder()
+y_train = le.fit_transform(y_train)
+y_test = le.fit_transform(y_test)
 ## Classification
 def rf_classification ():
 #     rf = RandomForestClassifier(n_estimators = 150, max_depth=50, random_state = RNDSEED)
@@ -64,6 +76,10 @@ def rf_classification ():
           # removed 'auto'
           random_state = RNDSEED
     )
+    print("Checking for NaN values in y_train:", pd.Series(y_train).isna().sum())
+    print(y_train.dtype)  # Should be int or at least convertible to int
+    print(set(y_train))   # Check unique values
+
     rf.fit(x_train, y_train)
 
     y_pred = rf.predict(x_test) ## using the untinted dataset!
@@ -84,7 +100,7 @@ calc_metrics(y_pred, y_test)
 
 # save the model
 # !! Change to local path
-model_path = r"./code/RandomForestModel/rf_model/rf2_joblib.pk"
+model_path = r"C:\Users\iLab\GIT_REPOS\SAFE\S1_TestBed_Demo\S1_TestBed_Demo\code\RandomForestModel\rf_model\rf02242025_joblib.pk"
 # C:\Users\iLab\GIT_REPOS\SAFE\S1_TestBed_Demo\S1_TestBed_Demo\code\RandomForestModel\rf_model
 print(f"\n\n\nSaving to: {model_path}")
 joblib.dump(rf, model_path)
@@ -97,6 +113,6 @@ print(result)
 new_y_pred = loaded_model.predict(x_test)
 new_metrics = calc_metrics(new_y_pred, y_test)
 
-#print(rf.to_micropython_file('microModel/micro_rf2.mpy'))
+
 
 

@@ -56,13 +56,27 @@ source s1_demo_starter.sh
 > The below numeric to string mappings help indicate what state the motor is predicted to be in. 
   Using the value indicated you can look up what it is predicting.
 
+
+## new fault set (2/24/25)
 * 0: "baseline"
 * 1: "bent_shaft"
 * 2: "eccentric_rotor"
 * 3: "offset_misalignment"
-* 4: "resonance_beam"
-* 5: "imbalance"
+* 4: "imbalance"  **
+* 5: "faulted_coupling"
+* 6: "angular_misalignment"
+
+
+
+## Old set
+
+* 0: "baseline"
+* 1: "bent_shaft"
+* 2: "eccentric_rotor"
+* 3: "offset_misalignment"
+* 4: "resonance_beam" (Remove)
+* 5: "imbalance"  **
 * 6: "faulted_coupling"
-* 7: "faulted_bearing"
+* 7: "faulted_bearing" (Remove)
 * 8: "angular_misalignment"
-* 9: "looseness"
+* 9: "looseness" (Remove)
