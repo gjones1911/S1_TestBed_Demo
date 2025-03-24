@@ -6,7 +6,7 @@ import time
 import os
 import sys
 import random
-
+import uuid
 import json
 from huggingface_hub import HfApi, login
 
@@ -47,7 +47,7 @@ MQTT_PORT = 1883
 MQTT_KEEPALIVE = 60
 DEMO_TIME_OUT = 7200                    # how long before the demo will run before stopping (uses sleep)
 PUBLISH_DELAY=5
-CLIENT_ID = "S1_Fault_Instructor"
+CLIENT_ID = f"S1_Fault_Instructor_{uuid.uuid4().hex[:8]}"
 MQTT_BROKER = "localhost" #"recoil.ise.utk.edu"
 
 MQTT_USER = "hivemquser"
@@ -127,7 +127,7 @@ class InstructorMqttClient:
             self.instruction_assistant= assistant
         elif assistant_path:
             print(f"loading model from path: {assistant_path}")
-            self.instruction_assistant= InstructorBot(bot_path=assistant_path, name='Instructor')
+            self.instruction_assistant= InstructorBot(bot_path=assistant_path, name='Instructor',)
         else:
             raise ValueError(f"One of 'instruction_assistant' in the form of an 'InstructorBot' or 'instruction_assistant_path' in the form of a path to a local or HF style LLM must be passed when creating the 'InstructorMqttClient', ending program")
             sys.exit()
@@ -250,7 +250,8 @@ class InstructorMqttClient:
                 client = self.create_client(client_name=CLIENT_NAME, )
                 # client.connect(MQTT_BROKER, MQTT_PORT, MQTT_KEEPALIVE)
                 connected = True
-                trys = try_limit+1
+                # trys = try_limit+1
+                break
             except Exception as ex:
                 print(f"Issue creating MQTT client:\n{ex}")
                 trys += 1

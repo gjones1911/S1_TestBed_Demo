@@ -13,7 +13,7 @@ source ../venvs/s1demovenv/Scripts/activate   # activate the environment
 DataPublisherLOG="./logs/s1_data_mqtt_pub.log"
 PredictionPublisherLOG="./logs/s1_prediction_starter.log"
 InstructionPublisherLOG="./logs/s1_instructor_starter.log"
-FlagFile="./tmp/s1_instructor_loaded.flag"
+FlagFile="./logs/s1_instructor_loaded.flag"
 
 if [ -f $DataPublisherLOG ]; then
    echo "File $DataPublisherLOG exists."
@@ -45,9 +45,9 @@ else
    echo "File $FlagFile does not exist.";
 fi
 
-python "./s1_mqtt_instructor/s1_instructor_starter.py"  --duration "$DURATION" > "./logs/s1_instructor_starter.log" 2>&1 &
+python -u "./s1_mqtt_instructor/s1_instructor_starter.py"  --duration "$DURATION" > "./logs/s1_instructor_starter.log" 2>&1 &
 
-while [ ! -f "./tmp/s1_instructor_loaded.flag" ]; 
+while [ ! -f "./logs/s1_instructor_loaded.flag" ]; 
 do
     echo "waiting on flag file"
     sleep 2
@@ -55,7 +55,7 @@ done
 
 echo "model loaded"
 
-python "./RandomForestPredictionMQTT/S1Predict.py" --duration "$DURATION"  > "./logs/s1_prediction_starter.log" 2>&1  &
+python -u "./RandomForestPredictionMQTT/S1Predict.py" --duration "$DURATION"  > "./logs/s1_prediction_starter.log" 2>&1  &
 sleep 2
 echo "predictor started"
 python "./S1_Data_MQTT/S1Data_MQTT_Pub.py" --duration "$DURATION" > "./logs/s1_data_mqtt_pub.log" 2>&1 &

@@ -8,7 +8,7 @@ print(curdir)
 # # a file is used as a flag to indicate when the model has completed loading
 # # to help ensure everything sinks up. To make this work we need to remove the flag
 # # first thing we do
-flag_file = curdir + "/tmp" + "/s1_instructor_loaded.flag"
+flag_file = curdir + "/logs" + "/s1_instructor_loaded.flag"
 # uncheck_flag_file(flag_file)
 
 
@@ -53,4 +53,4 @@ if __name__ == "__main__":
     duration = parse_args()
     duration = 40000
     print(f"\n\nDuration: {duration}\n\n")
-    mqtt_instructor.run_mqtt_s1_instructor(client_name=CLIENT_ID, demo_time_out=duration, try_limit=10)
+    mqtt_instructor.run_mqtt_s1_instructor(client_name=CLIENT_ID, demo_time_out=duration, try_limit=1)

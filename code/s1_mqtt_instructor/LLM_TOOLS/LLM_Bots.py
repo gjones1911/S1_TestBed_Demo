@@ -29,8 +29,8 @@ class InstructorBot:
         self.truncation=truncation
         self.do_sample=do_sample
 
-    def load_bot(self, hf_path):
-        return pipeline("text-generation", model=hf_path)
+    def load_bot(self, hf_path, device_map="auto"):
+        return pipeline("text-generation", model=hf_path, device_map=device_map)
 
     def respond(self, task_for_instruction):
         max_length = self.max_length

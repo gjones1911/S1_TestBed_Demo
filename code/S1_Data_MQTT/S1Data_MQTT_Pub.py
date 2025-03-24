@@ -122,19 +122,12 @@ def publishing_data():
                 value = 0
                 json_package[key] = 0
             else: 
-<<<<<<< HEAD
                 unity_topic = f'{key}'
                 topic = convert_spaces_to_underscores(key)              
                 value = np.around(values[-1], 4) # get last added element
                 json_package[topic] = value
                 pub_client.publish(unity_topic, value, qos = 0)   # old code for multi-channel publishing
                 print(f'Published Data on unity_topic: {unity_topic}, val: {value:.04f}')       
-=======
-                topic = convert_spaces_to_underscores(key)              
-                value = np.around(values[-1], 4) # get last added element
-                json_package[topic] = value
-                       
->>>>>>> 88f1da1562228177faf381055f8729507348d54f
         json_package['timestamp']  = time.strftime("%Y-%m-%dT%H:%M:%SZ") 
         
         json_payload = json.dumps(json_package)
