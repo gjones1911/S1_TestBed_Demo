@@ -16,7 +16,6 @@ MQTT_BROKER = "localhost" # local mosquitto broker
 MQTT_USER = "hivemquser"
 MQTT_PWD = "mqAccess2024REC"
 MQTT_PORT = 1883
-# MQTT_TOPIC = "sensors/temperature"
 
 try:
     client_id = f'Pub_xl_{uuid.uuid4().hex[:8]}'
@@ -33,14 +32,14 @@ try:
         # Create a JSON message
         # Include timestamp in ISO 8601 format
         payload = json.dumps({
-            "temperature": randNumber,
+            "rms": randNumber,
             "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ")  # ISO 8601 UTC format
         })
 
         # Publish as a JSON object
-        client.publish("sensors/temperature", payload)
+        client.publish("s1/rms", payload)
 
-        print(f"Just published {randNumber} to Topic sensors/temperature")
+        print(f"Just published {randNumber} to Topic s1/RMS")
         time.sleep(1)
 except Exception as e:
     print(f"An error occurred: {e}")

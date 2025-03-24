@@ -79,4 +79,22 @@ source s1_demo_starter.sh
 * 6: "faulted_coupling"
 * 7: "faulted_bearing" (Remove)
 * 8: "angular_misalignment"
+<<<<<<< HEAD
 * 9: "looseness" (Remove)
+=======
+* 9: "looseness"
+
+
+## Docker commands
+
+> kill all dockers
+```bash
+docker compose -f .\docker-compose.s1.yml down -v 
+```
+
+
+> start all dockers
+```bash
+docker compose -f .\docker-compose.s1.yml up -d 
+```
+>>>>>>> 88f1da1562228177faf381055f8729507348d54f
