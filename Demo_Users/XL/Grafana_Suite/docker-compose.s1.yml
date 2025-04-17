@@ -19,6 +19,8 @@ services:
   telegraf:
     image: telegraf:1.25  # Ensure version compatibility. was 1.25
     container_name: telegraf
+    user: root
+    privileged: true
     depends_on:
       - influxdb
       - mosquitto
