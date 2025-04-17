@@ -128,3 +128,21 @@ This repo is for running and maintaining the the S1-testbed demo for the Applied
   - when to re-train the model
   - ?
 
+# Workflow
+
+## If docker is not running:
+
+- Step 1: start WSL
+  - open `cmd` and type `wsl -d Ubuntu` # it is v24.04
+- Step 2: open docker. It should not throw out the "WSL error". 
+  - Just a note, we did use /Resources/WSL Integration/`Ubuntu`
+
+## run two scripts to demo
+- #1: the main script for ML models
+  - under the github project folder: `cd code`, `./s1_demo_starter.sh`
+- #2: the mqtt, if the containers are not running in docker
+  - under the github project folder: 
+    -`cd Demo_Users/XL/Grafana_Suite`
+    -`docker compose -f docker-compose.s1.yml up -d`
+
+
