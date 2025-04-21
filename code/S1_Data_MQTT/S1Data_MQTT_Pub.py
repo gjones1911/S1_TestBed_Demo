@@ -124,7 +124,7 @@ def publishing_data():
             else: 
                 unity_topic = f'{key}'
                 topic = convert_spaces_to_underscores(key)              
-                value = np.around(values[-1], 4) # get last added element
+                value = np.around(values[-1], 4) if values and values[-1] is not None else 0  # get last added element or default to 0 if None or empty
                 json_package[topic] = value
                 pub_client.publish(unity_topic, value, qos = 0)   # old code for multi-channel publishing
                 print(f'Published Data on unity_topic: {unity_topic}, val: {value:.04f}')       
